@@ -1,0 +1,5 @@
+flask
+pillow
+transparent-background
+torch
+torchvision
