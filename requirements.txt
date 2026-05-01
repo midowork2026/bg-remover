@@ -1,6 +1,3 @@
 flask
 pillow
-gunicorn
-onnxruntime
-rembg
-werkzeug
+requests
