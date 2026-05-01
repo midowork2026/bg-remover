@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>HAMOUZI</title>
@@ -8,28 +8,17 @@
 body{
     margin:0;
     font-family:Arial;
-    background: radial-gradient(circle,#111,#000);
-    color:white;
+    background:#000;
+    color:#fff;
     text-align:center;
 }
 
 /* LOGO */
 .logo{
-    font-size:42px;
+    font-size:55px;
     color:gold;
     margin-top:20px;
-}
-
-/* LOGIN */
-.login-btn{
-    position:absolute;
-    top:20px;
-    right:20px;
-    border:1px solid gold;
-    padding:8px 15px;
-    border-radius:10px;
-    color:gold;
-    text-decoration:none;
+    text-shadow:0 0 20px gold;
 }
 
 /* WRAPPER */
@@ -37,55 +26,39 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:30px;
+    gap:40px;
     margin-top:40px;
 }
 
-/* BOX */
+/* BOX SHAPE */
 .box{
-    width:300px;
-    height:420px;
-    border:2px solid gold;
-    border-radius:160px;
+    width:320px;
+    height:460px;
+    border-radius:180px;
+    border:2px solid rgba(255,215,0,0.6);
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    overflow:hidden;
     position:relative;
+    box-shadow:0 0 20px rgba(255,215,0,0.4);
 }
 
-/* IMPORTANT FIX */
-.box::before{
-    pointer-events:none;
+/* UPLOAD DASH BORDER */
+.upload-box{
+    border-style:dashed;
 }
 
-/* AD */
+/* AD (خفيف جدًا) */
 .ad{
     width:120px;
-    height:400px;
-    border:1px solid rgba(255,215,0,0.2);
+    height:420px;
     border-radius:20px;
+    border:1px solid rgba(255,215,0,0.15);
     display:flex;
     align-items:center;
     justify-content:center;
     color:gold;
-}
-
-/* UPLOAD */
-.upload-btn{
-    margin-top:15px;
-    padding:12px 25px;
-    border-radius:12px;
-    border:1px solid gold;
-    background:transparent;
-    color:gold;
-    cursor:pointer;
-}
-
-.upload-btn:hover{
-    background:gold;
-    color:black;
 }
 
 /* TOOLS */
@@ -98,11 +71,12 @@ body{
 .tool-btn{
     width:150px;
     padding:12px;
-    border-radius:12px;
+    border-radius:15px;
     border:1px solid gold;
     background:transparent;
     color:gold;
     cursor:pointer;
+    box-shadow:0 0 10px rgba(255,215,0,0.4);
 }
 
 .tool-btn:hover{
@@ -110,10 +84,10 @@ body{
     color:black;
 }
 
-/* REMOVE */
-.remove-btn{
-    margin-top:30px;
-    padding:15px 50px;
+/* UPLOAD BUTTON */
+.upload-btn{
+    margin-top:15px;
+    padding:12px 25px;
     border-radius:15px;
     border:1px solid gold;
     background:transparent;
@@ -121,29 +95,48 @@ body{
     cursor:pointer;
 }
 
+/* PREVIEW BG (checker) */
+.preview{
+    background:
+    linear-gradient(45deg,#444 25%, transparent 25%),
+    linear-gradient(-45deg,#444 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #444 75%),
+    linear-gradient(-45deg, transparent 75%, #444 75%);
+    background-size:20px 20px;
+    background-position:0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
 /* IMAGE */
 .result-img{
     width:100%;
     height:100%;
     object-fit:cover;
+    border-radius:180px;
 }
 
-/* DOWNLOAD */
-.download-btn{
-    position:absolute;
-    bottom:20px;
-    padding:10px 20px;
+/* REMOVE BUTTON */
+.remove-btn{
+    margin-top:30px;
+    padding:15px 60px;
+    border-radius:20px;
     border:1px solid gold;
-    border-radius:10px;
+    background:transparent;
     color:gold;
-    text-decoration:none;
+    font-size:18px;
+    cursor:pointer;
+    box-shadow:0 0 15px gold;
+}
+
+.remove-btn:hover{
+    background:gold;
+    color:black;
 }
 
 /* FOOTER */
 .footer{
     margin-top:25px;
+    color:gold;
 }
-
 .footer a{
     color:gold;
     margin:0 10px;
@@ -154,51 +147,45 @@ body{
 <body>
 
 <div class="logo">HAMOUZI</div>
-<a href="/login" class="login-btn">تسجيل الدخول</a>
 
-<form id="form" action="/upload" method="POST" enctype="multipart/form-data">
+<form action="/upload" method="POST" enctype="multipart/form-data">
 
 <div class="wrapper">
 
-<div class="ad">AD</div>
+<div class="ad">AD SPACE</div>
 
 <!-- UPLOAD -->
-<div class="box">
-    <h3>Upload</h3>
+<div class="box upload-box">
+    <h3>Upload Image</h3>
+    <p>Click to upload</p>
 
-    <input type="file" name="file" id="fileInput" hidden required>
+    <input type="file" name="file" id="fileInput" hidden>
 
-    <label for="fileInput" class="upload-btn">رفع الصورة</label>
-
-    <span id="fileName"></span>
+    <label for="fileInput" class="upload-btn">
+        Upload
+    </label>
 </div>
 
 <!-- TOOLS -->
 <div class="tools">
-    <button type="button" class="tool-btn" onclick="cropImage()">✂️ Crop</button>
-    <button type="button" class="tool-btn" onclick="compressImage()">🗜️ Compress</button>
-    <button type="button" class="tool-btn" onclick="convertImage()">🔄 Convert</button>
+    <button type="button" class="tool-btn">Crop</button>
+    <button type="button" class="tool-btn">Compress</button>
+    <button type="button" class="tool-btn">Convert</button>
 </div>
 
 <!-- PREVIEW -->
-<div class="box" id="previewBox">
+<div class="box preview">
 
 {% if result_image %}
 <img class="result-img" src="data:image/png;base64,{{ result_image }}">
-
-<a download="result.png"
-   href="data:image/png;base64,{{ result_image }}"
-   class="download-btn">
-   Download
-</a>
-
 {% else %}
 <h3>Preview</h3>
+<p>Your image will appear here</p>
 {% endif %}
 
 </div>
 
-<div class="ad">AD</div>
+<div class="ad">AD SPACE</div>
 
 </div>
 
@@ -207,115 +194,9 @@ body{
 </form>
 
 <div class="footer">
-<a href="/privacy">سياسة الخصوصية</a> |
-<a href="/contact">اتصل بنا</a>
+    <a href="/privacy">Privacy Policy</a> |
+    <a href="/contact">Contact Us</a>
 </div>
-
-<script>
-let imageFile = null;
-
-document.getElementById("fileInput").addEventListener("change", function(e){
-    imageFile = e.target.files[0];
-
-    document.getElementById("fileName").innerText = imageFile.name;
-
-    const reader = new FileReader();
-    reader.onload = function(){
-        document.getElementById("previewBox").innerHTML =
-        <img class="result-img" src="${reader.result}">;
-    }
-    reader.readAsDataURL(imageFile);
-});
-
-/* CROP (قص بسيط من المنتصف) */
-function cropImage(){
-    if(!imageFile) return alert("ارفع صورة");
-
-    const img = new Image();
-    img.onload = function(){
-        const canvas = document.createElement("canvas");
-        const size = Math.min(img.width, img.height);
-
-        canvas.width = size;
-        canvas.height = size;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img,
-            (img.width-size)/2,
-            (img.height-size)/2,
-            size,size,
-            0,0,size,size
-        );
-
-        updateImage(canvas);
-    }
-
-    img.src = URL.createObjectURL(imageFile);
-}
-
-/* COMPRESS */
-function compressImage(){
-    if(!imageFile) return alert("ارفع صورة");
-
-    const reader = new FileReader();
-    reader.onload = function(e){
-        const img = new Image();
-        img.onload = function(){
-            const canvas = document.createElement("canvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img,0,0);
-
-            canvas.toBlob(function(blob){
-                imageFile = blob;
-                updatePreview(URL.createObjectURL(blob));
-            }, "image/jpeg", 0.5);
-        }
-        img.src = e.target.result;
-    }
-    reader.readAsDataURL(imageFile);
-}
-
-/* CONVERT PNG */
-function convertImage(){
-    if(!imageFile) return alert("ارفع صورة");
-
-    const reader = new FileReader();
-    reader.onload = function(e){
-        const img = new Image();
-        img.onload = function(){
-            const canvas = document.createElement("canvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img,0,0);
-
-            canvas.toBlob(function(blob){
-                imageFile = blob;
-                updatePreview(URL.createObjectURL(blob));
-            }, "image/png");
-        }
-        img.src = e.target.result;
-    }
-    reader.readAsDataURL(imageFile);
-}
-
-/* UPDATE */
-function updateImage(canvas){
-    canvas.toBlob(function(blob){
-        imageFile = blob;
-        updatePreview(URL.createObjectURL(blob));
-    });
-}
-
-function updatePreview(src){
-    document.getElementById("previewBox").innerHTML =
-    <img class="result-img" src="${src}">;
-}
-</script>
 
 </body>
 </html>
