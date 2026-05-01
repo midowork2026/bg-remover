@@ -14,7 +14,6 @@
             color: #fff;
         }
 
-        /* Overlay */
         body::before {
             content: "";
             position: fixed;
@@ -73,9 +72,82 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            cursor: pointer;
         }
 
         .btn {
-            margin-top: 30px;
-            padding: 15
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: black;
+            border: 1px solid gold;
+            color: gold;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #333;
+        }
+
+        footer a {
+            color: gold;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HAMOUZI</div>
+    <a href="/login"><button class="login-btn">تسجيل الدخول</button></a>
+</header>
+
+<div class="container">
+    <div class="title">Remove Background</div>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="main-box">
+
+            <div class="box">
+                <p>Upload Image</p>
+                <input type="file" name="file" required>
+            </div>
+
+            <div>
+                <button type="submit" class="btn">Remove Background</button>
+            </div>
+
+            <div class="box">
+                <p>Preview</p>
+
+                {% if result_image %}
+                    <img src="data:image/png;base64,{{ result_image }}">
+                    <br><br>
+                    <a download="result.png" href="data:image/png;base64,{{ result_image }}">
+                        <button class="btn">Download</button>
+                    </a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<footer>
+    <a href="#">سياسة الخصوصية</a>
+    |
+    <a href="#">اتصل بنا</a>
+</footer>
+
+</body>
+</html>
