@@ -7,7 +7,6 @@
 
 <style>
 
-/* ===== BODY ===== */
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -15,7 +14,6 @@ body {
     color: white;
 }
 
-/* OVERLAY */
 body::before {
     content: "";
     position: fixed;
@@ -44,7 +42,7 @@ body::before {
     background: linear-gradient(to right, transparent, gold, transparent);
 }
 
-/* MAIN WRAPPER */
+/* LAYOUT */
 .wrapper {
     display: flex;
     justify-content: center;
@@ -66,6 +64,7 @@ body::before {
 
 /* BOX */
 .box {
+    position: relative;
     width: 270px;
     height: 420px;
     border-radius: 150px;
@@ -75,7 +74,16 @@ body::before {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 20px rgba(255,215,0,0.2);
+}
+
+/* DASHED */
+.box::before {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 360px;
+    border-radius: 130px;
+    border: 1px dashed rgba(255,215,0,0.4);
 }
 
 /* ICON */
@@ -150,6 +158,32 @@ body::before {
     color: black;
 }
 
+/* RESULT IMAGE */
+.result-img {
+    width: 260px;
+    max-height: 320px;
+    object-fit: contain;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255,215,0,0.5);
+}
+
+/* DOWNLOAD BUTTON */
+.download-btn {
+    margin-top: 15px;
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: 1px solid gold;
+    background: rgba(0,0,0,0.7);
+    color: gold;
+    cursor: pointer;
+}
+
+.download-btn:hover {
+    background: gold;
+    color: black;
+}
+
 /* FOOTER */
 .footer {
     text-align: center;
@@ -182,13 +216,11 @@ body::before {
         <h3>Upload Image</h3>
         <p>Click to upload</p>
 
-        <!-- INPUT مخفي -->
-        <input type="file" id="fileInput" name="file" required style="display:none;">
-
-        <!-- زرار فعلي -->
-        <div class="upload-area" onclick="openFile()">
+        <label class="upload-area" for="fileInput">
             <span id="fileName">اضغط لرفع الصورة</span>
-        </div>
+        </label>
+
+        <input type="file" name="file" id="fileInput" hidden required>
     </div>
 
     <!-- TOOLS -->
@@ -204,19 +236,28 @@ body::before {
         <h3>Preview</h3>
 
         {% if result_image %}
-            <img src="data:image/png;base64,{{ result_image }}" width="180">
+            <img class="result-img" src="data:image/png;base64,{{ result_image }}">
+
+            <a download="result.png" href="data:image/png;base64,{{ result_image }}">
+                <button type="button" class="download-btn">⬇️ Download</button>
+            </a>
         {% else %}
             <p>Your image will appear here</p>
         {% endif %}
+
     </div>
 
     <div class="ad">AD SPACE</div>
 
 </div>
 
-<button type="submit" class="main-btn">✨ Remove Background</button>
+<button class="main-btn">✨ Remove Background</button>
 
 </form>
+
+{% if error %}
+<p style="color:red; text-align:center;">{{ error }}</p>
+{% endif %}
 
 <div class="footer">
     <p>✔️ 100% Secure | 🔒 No data stored | ⭐ High Quality</p>
@@ -227,12 +268,7 @@ body::before {
     <p>© 2025 HAMOUZI</p>
 </div>
 
-<!-- SCRIPT -->
 <script>
-function openFile() {
-    document.getElementById("fileInput").click();
-}
-
 document.getElementById("fileInput").addEventListener("change", function(){
     if(this.files.length > 0){
         document.getElementById("fileName").innerText = this.files[0].name;
