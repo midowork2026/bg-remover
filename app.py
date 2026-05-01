@@ -1,11 +1,9 @@
-import ssl, os, base64, io
 from flask import Flask, render_template, request
-from transparent_background import Remover
 from PIL import Image
+from rembg import remove
+import io, base64, os
 
-ssl._create_default_https_context = ssl._create_unverified_context
-app = Flask(__name__)
-remover = Remover()
+app = Flask(_name_)
 
 @app.route('/')
 def index():
@@ -14,14 +12,19 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files.get('file')
-    if not file: return "ارفع صورة!"
-    input_image = Image.open(file.stream).convert('RGB')
-    output_image = remover.process(input_image)
+    if not file:
+        return "ارفع صورة!"
+
+    input_image = Image.open(file.stream).convert('RGBA')
+    output_image = remove(input_image)
+
     img_io = io.BytesIO()
     output_image.save(img_io, 'PNG')
     img_io.seek(0)
+
     img_base64 = base64.b64encode(img_io.getvalue()).decode('utf-8')
     return render_template('index.html', result_image=img_base64)
 
-if __name__ == '__main__':
-    return render_template('index.html', result_image=img_base64)
+if _name_ == '_main_':
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
