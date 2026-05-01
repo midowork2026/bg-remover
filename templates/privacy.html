@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>سياسة الخصوصية - HAMOUZI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: url("{{ url_for('static', filename='bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 30px;
+            border: 1px solid gold;
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: gold;
+            text-align: center;
+        }
+
+        p {
+            line-height: 1.8;
+        }
+
+        a {
+            color: gold;
+            text-decoration: none;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>سياسة الخصوصية</h1>
+
+    <p>
+        نحن في موقع HAMOUZI نحترم خصوصيتك بشكل كامل. لا نقوم بحفظ الصور التي يتم رفعها على الموقع،
+        ويتم استخدامها فقط لمعالجة إزالة الخلفية ثم حذفها تلقائيًا.
+    </p>
+
+    <p>
+        لا نقوم بمشاركة بياناتك مع أي طرف ثالث، وجميع العمليات تتم بشكل آمن.
+    </p>
+
+    <p>
+        باستخدامك للموقع، فإنك توافق على هذه السياسة.
+    </p>
+
+    <a href="/" class="back">العودة إلى الصفحة الرئيسية</a>
+</div>
+
+</body>
+</html>
