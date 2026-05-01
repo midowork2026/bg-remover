@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request
-from PIL import Image
-from rembg import remove
-import io, base64, os
+from flask import render_template
 
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
 app = Flask(__name__)
 
 @app.route('/')
