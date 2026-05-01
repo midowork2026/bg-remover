@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: url("/static/bg.jpg") no-repeat center center fixed;
+            background: url("{{ url_for('static', filename='bg.jpg') }}") no-repeat center center fixed;
             background-size: cover;
             color: #fff;
         }
@@ -37,12 +37,18 @@
         }
 
         .login-btn {
-            padding: 10px 20px;
+            padding: 10px 25px;
             border: 1px solid gold;
             background: transparent;
             color: gold;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: gold;
+            color: black;
         }
 
         .container {
@@ -61,6 +67,7 @@
             justify-content: center;
             align-items: center;
             gap: 30px;
+            flex-wrap: wrap;
         }
 
         .box {
@@ -72,6 +79,17 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            transition: 0.3s;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px gold;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+            color: white;
         }
 
         .btn {
@@ -83,13 +101,23 @@
             font-size: 18px;
             cursor: pointer;
             border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: gold;
+            color: black;
         }
 
         footer {
-            margin-top: 50px;
+            margin-top: 60px;
             text-align: center;
             padding: 20px;
             border-top: 1px solid #333;
+        }
+
+        footer p {
+            margin-bottom: 10px;
         }
 
         footer a {
@@ -98,8 +126,13 @@
             text-decoration: none;
         }
 
+        footer a:hover {
+            text-decoration: underline;
+        }
+
         img {
             max-width: 100%;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -144,9 +177,10 @@
 </div>
 
 <footer>
-    <a href="#">سياسة الخصوصية</a>
+    <p>© 2026 HAMOUZI - All Rights Reserved</p>
+    <a href="/privacy">سياسة الخصوصية</a>
     |
-    <a href="#">اتصل بنا</a>
+    <a href="/contact">اتصل بنا</a>
 </footer>
 
 </body>
