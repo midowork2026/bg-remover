@@ -17,38 +17,44 @@ body{
 body::before{
     content:"";
     position:fixed;
-    width:100%;
-    height:100%;
-    background:radial-gradient(circle at center, rgba(255,215,0,0.15), transparent 70%);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:800px;
+    height:800px;
+    background:radial-gradient(circle, rgba(255,215,0,0.25), transparent 70%);
     z-index:-1;
 }
-
 /* 🔥 HEADER */
 .header{
     display:flex;
-    justify-content:space-between;
+    justify-content:center;
     align-items:center;
-    padding:20px 40px;
+    position:relative;
+    padding:20px;
 }
 
-/* LOGO */
 .logo{
-    font-size:65px;
+    font-size:80px;
     color:gold;
     font-weight:bold;
-    text-shadow:0 0 25px gold;
+    text-shadow:0 0 40px gold;
 }
-
 /* 🔥 GOLD LINE تحت اللوجو */
 .logo-line{
-    width:200px;
+    width:220px;
     height:3px;
-    margin:10px auto 0;
+    margin:10px auto;
     background:linear-gradient(to right, transparent, gold, transparent);
+    box-shadow:0 0 15px gold;
 }
-
 /* LOGIN BUTTON */
 .login-btn{
+    .login-btn{
+    position:absolute;
+    right:40px;
+    top:20px;
+}
     padding:10px 20px;
     border-radius:12px;
     border:1px solid gold;
