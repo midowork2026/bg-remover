@@ -27,13 +27,10 @@ body::before{
 }
 /* 🔥 HEADER */
 .header{
-    display:flex;
-    justify-content:center;
-    align-items:center;
     position:relative;
-    padding:20px;
+    text-align:center;
+    padding:20px 0;
 }
-
 .logo{
     font-size:80px;
     color:gold;
@@ -50,15 +47,12 @@ body::before{
 }
 
 /* LOGIN */
-.login-btn {
-    border: 1px solid gold;
-    padding: 10px 20px;
-    background: transparent;
-    color: gold;
-    cursor: pointer;
-    border-radius: 10px;
-}
-/* WRAPPER */
+.login-btn{
+    position:absolute;
+    right:40px;
+    top:30px;
+
+    /* WRAPPER */
 .wrapper{
     display:flex;
     justify-content:center;
@@ -220,15 +214,16 @@ body::before{
 <!-- PREVIEW -->
 <div class="box preview">
 
-{% if result_image %}
-<img class="result-img" src="data:image/png;base64,{{ result_image }}">
-{% else %}
-<h3>Preview</h3>
-<p>Your image will appear here</p>
-{% endif %}
+    {% if result_image %}
+        <img class="result-img" src="data:image/png;base64,{{ result_image }}">
+    {% else %}
+        <div class="preview-placeholder">
+            <h3>Preview</h3>
+            <p>Your image will appear here</p>
+        </div>
+    {% endif %}
 
 </div>
-
 <div class="ad">AD SPACE</div>
 
 </div>
