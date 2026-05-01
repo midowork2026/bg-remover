@@ -1,63 +1,46 @@
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, render_template, request
 from rembg import remove
 from PIL import Image
-import io, base64, os
+import io
+import base64
+import os
 
-app = Flask(__name__)
-app.secret_key = "secret123"  # مهم للـ session
+app = Flask(_name_)
 
-# بيانات تسجيل دخول ثابتة
-USERNAME = "admin"
-PASSWORD = "1234"
-
-@app.route("/")
+# الصفحة الرئيسية
+@app.route('/')
 def index():
-    if "user" not in session:
-        return redirect("/login")
-    return render_template("index.html")
+    return render_template('index.html')
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-
-        if username == USERNAME and password == PASSWORD:
-            session["user"] = username
-            return redirect("/")
-        else:
-            return "بيانات غلط!"
-
-    return render_template("login.html")
-
-
-@app.route("/logout")
-def logout():
-    session.pop("user", None)
-    return redirect("/login")
-
-
+# رفع الصورة ومعالجتها
 @app.route('/upload', methods=['POST'])
 def upload():
-    if "user" not in session:
-        return redirect("/login")
+    try:
+        file = request.files.get('file')
 
-    file = request.files.get('file')
-    if not file:
-        return "ارفع صورة!"
+        if not file:
+            return render_template('index.html', error="ارفع صورة")
 
-    input_image = Image.open(file.stream).convert('RGBA')
-    output_image = remove(input_image)
+        # 🔥 تقليل حجم الصورة (مهم عشان السيرفر ما يقعش)
+        input_image = Image.open(file.stream).convert('RGBA')
+        input_image.thumbnail((800, 800))
 
-    img_io = io.BytesIO()
-    output_image.save(img_io, 'PNG')
-    img_io.seek(0)
+        output_image = remove(input_image)
 
-    img_base64 = base64.b64encode(img_io.getvalue()).decode('utf-8')
-    return render_template('index.html', result_image=img_base64)
+        img_io = io.BytesIO()
+        output_image.save(img_io, 'PNG')
+        img_io.seek(0)
+
+        img_base64 = base64.b64encode(img_io.getvalue()).decode('utf-8')
+
+        return render_template('index.html', result_image=img_base64)
+
+    except Exception as e:
+        print("ERROR:", e)
+        return render_template('index.html', error="حصل خطأ، جرب صورة أصغر")
 
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
