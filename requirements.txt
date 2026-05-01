@@ -1,4 +1,4 @@
 flask
 pillow
 gunicorn
-rembg[gpu]
+transparent-background
