@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>HAMOUZI</title>
-
-<style>
+<title>HAMOUZI</title><style>
 
 body {
     margin: 0;
@@ -13,7 +10,7 @@ body {
     color: white;
 }
 
-/* DARK OVERLAY */
+/* OVERLAY */
 body::before {
     content: "";
     position: fixed;
@@ -32,7 +29,6 @@ body::before {
 
 .logo {
     font-size: 40px;
-    font-weight: bold;
     color: gold;
 }
 
@@ -57,12 +53,10 @@ body::before {
     width: 150px;
     height: 420px;
     border-radius: 25px;
-    border: 1px solid rgba(255,215,0,0.5);
+    border: 1px solid gold;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: gold;
-    backdrop-filter: blur(10px);
 }
 
 /* BOX */
@@ -70,25 +64,12 @@ body::before {
     width: 280px;
     height: 420px;
     border-radius: 150px;
-    border: 2px solid rgba(255,215,0,0.8);
+    border: 2px solid gold;
     background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 30px rgba(255,215,0,0.4);
-    position: relative;
-}
-
-/* INNER LINE */
-.box::before {
-    content: "";
-    position: absolute;
-    width: 230px;
-    height: 360px;
-    border-radius: 120px;
-    border: 1px dashed rgba(255,215,0,0.4);
 }
 
 /* UPLOAD */
@@ -107,12 +88,12 @@ body::before {
     color: black;
 }
 
-/* IMAGE */
+/* RESULT IMAGE */
 .result-img {
-    width: 100%;
-    height: 220px;
+    width: 90%;
+    height: 250px;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 /* MAIN BUTTON */
@@ -122,9 +103,8 @@ body::before {
     padding: 15px 50px;
     border-radius: 20px;
     border: 1px solid gold;
-    background: rgba(0,0,0,0.7);
+    background: transparent;
     color: gold;
-    font-size: 18px;
     cursor: pointer;
 }
 
@@ -144,73 +124,55 @@ body::before {
     margin: 0 10px;
 }
 
-</style>
-</head>
-
-<body>
-
-<div class="header">
+</style></head><body><!-- HEADER --><div class="header">
     <div class="logo">HAMOUZI</div>
-    <a href="/login"><button class="login-btn">تسجيل الدخول</button></a>
+    <a href="#"><button class="login-btn">تسجيل الدخول</button></a>
+</div><form action="/upload" method="POST" enctype="multipart/form-data"><div class="wrapper"><!-- LEFT AD -->
+<div class="ad">AD SPACE</div>
+
+<!-- UPLOAD -->
+<div class="box">
+    <h3>Upload Image</h3>
+
+    <input type="file" name="file" id="fileInput" hidden required>
+
+    <button type="button" class="upload-btn"
+    onclick="document.getElementById('fileInput').click()">
+        اضغط لرفع الصورة
+    </button>
+
+    <span id="fileName"></span>
 </div>
 
-<form action="/upload" method="POST" enctype="multipart/form-data">
+<!-- PREVIEW -->
+<div class="box">
 
-<div class="wrapper">
+    {% if result_image %}
+        <img class="result-img" src="data:image/png;base64,{{ result_image }}">
 
-    <div class="ad">AD SPACE</div>
+        <a download="result.png" href="data:image/png;base64,{{ result_image }}">
+            <button class="upload-btn">Download</button>
+        </a>
 
-    <!-- UPLOAD -->
-    <div class="box">
-        <h3>Upload Image</h3>
-
-        <input type="file" name="file" id="fileInput" hidden required>
-
-        <button type="button" class="upload-btn"
-        onclick="document.getElementById('fileInput').click()">
-            اضغط لرفع الصورة
-        </button>
-
-        <span id="fileName"></span>
-    </div>
-
-    <!-- PREVIEW -->
-    <div class="box">
-
-        {% if result_image %}
-            <img class="result-img" src="data:image/png;base64,{{ result_image }}">
-            <br>
-
-            <a download="result.png" href="data:image/png;base64,{{ result_image }}">
-                <button class="upload-btn">Download</button>
-            </a>
-
-        {% else %}
-            <p>Preview</p>
-        {% endif %}
-
-    </div>
-
-    <div class="ad">AD SPACE</div>
+    {% else %}
+        <p>Preview</p>
+    {% endif %}
 
 </div>
 
-<button class="main-btn">✨ Remove Background</button>
+<!-- RIGHT AD -->
+<div class="ad">AD SPACE</div>
 
-</form>
+</div><button class="main-btn">✨ Remove Background</button>
 
-<div class="footer">
-    <a href="/privacy">سياسة الخصوصية</a> |
-    <a href="/contact">اتصل بنا</a>
-</div>
-
-<script>
+</form><!-- FOOTER --><div class="footer">
+    <a href="#">سياسة الخصوصية</a> |
+    <a href="#">اتصل بنا</a>
+</div><script>
 document.getElementById("fileInput").addEventListener("change", function(){
     if(this.files.length > 0){
         document.getElementById("fileName").innerText = this.files[0].name;
     }
 });
-</script>
-
-</body>
+</script></body>
 </html>
