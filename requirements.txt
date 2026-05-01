@@ -1,4 +1,5 @@
 flask
 pillow
 gunicorn
-transparent-background
+onnxruntimerembg
+rembg
