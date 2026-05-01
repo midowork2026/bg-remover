@@ -160,14 +160,14 @@ body::before {
 
 /* RESULT IMAGE */
 .result-img {
-    width: 260px;
-    max-height: 320px;
-    object-fit: contain;
-    margin-top: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(255,215,0,0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 🔥 يخلي الصورة تملأ البوكس */
+    border-radius: 150px;
 }
-
 /* DOWNLOAD BUTTON */
 .download-btn {
     margin-top: 15px;
@@ -231,43 +231,24 @@ body::before {
     </div>
 
     <!-- PREVIEW -->
-    <div class="box">
+<div class="box">
+
+    {% if result_image %}
+        <img class="result-img" src="data:image/png;base64,{{ result_image }}">
+
+        <a download="result.png" href="data:image/png;base64,{{ result_image }}">
+            <button type="button" class="download-btn" style="position:absolute; bottom:20px;">
+                ⬇️ Download
+            </button>
+        </a>
+
+    {% else %}
         <div class="icon">🧊</div>
         <h3>Preview</h3>
-
-        {% if result_image %}
-            <img class="result-img" src="data:image/png;base64,{{ result_image }}">
-
-            <a download="result.png" href="data:image/png;base64,{{ result_image }}">
-                <button type="button" class="download-btn">⬇️ Download</button>
-            </a>
-        {% else %}
-            <p>Your image will appear here</p>
-        {% endif %}
-
-    </div>
-
-    <div class="ad">AD SPACE</div>
+        <p>Your image will appear here</p>
+    {% endif %}
 
 </div>
-
-<button class="main-btn">✨ Remove Background</button>
-
-</form>
-
-{% if error %}
-<p style="color:red; text-align:center;">{{ error }}</p>
-{% endif %}
-
-<div class="footer">
-    <p>✔️ 100% Secure | 🔒 No data stored | ⭐ High Quality</p>
-
-    <a href="/privacy">Privacy Policy</a> |
-    <a href="/contact">Contact Us</a>
-
-    <p>© 2025 HAMOUZI</p>
-</div>
-
 <script>
 document.getElementById("fileInput").addEventListener("change", function(){
     if(this.files.length > 0){
