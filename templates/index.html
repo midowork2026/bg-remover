@@ -2,7 +2,6 @@
 <head>
 <meta charset="UTF-8">
 <title>HAMOUZI</title><style>
-
 body {
     margin: 0;
     font-family: 'Segoe UI';
@@ -20,31 +19,22 @@ body::before {
     z-index: -1;
 }
 
-/* HEADER */
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 40px;
-}
-
+/* LOGO */
 .logo {
-    font-size: 40px;
-    color: gold;
+    text-align: center;
+    font-size: 70px;
     font-weight: bold;
+    background: linear-gradient(to right, #FFD700, #ffcc00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
 }
 
-.login-btn {
-    border: 1px solid gold;
-    padding: 10px 20px;
-    background: transparent;
-    color: gold;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-.login-btn:hover {
-    background: gold;
-    color: black;
+.line {
+    width: 250px;
+    height: 2px;
+    margin: 10px auto 30px;
+    background: linear-gradient(to right, transparent, gold, transparent);
 }
 
 /* MAIN */
@@ -53,58 +43,82 @@ body::before {
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-top: 40px;
 }
 
-/* ADS */
+/* 🔥 ADS (خفيف جدًا زي ما طلبت) */
 .ad {
     width: 150px;
     height: 420px;
     border-radius: 25px;
-    border: 1px solid gold;
+    border: 1px solid rgba(255,215,0,0.3);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: gold;
+    color: rgba(255,215,0,0.7);
 }
 
-/* BOX */
+/* 🔥 BOX (تقيل واحترافي) */
 .box {
-    width: 280px;
+    width: 270px;
     height: 420px;
     border-radius: 150px;
-    border: 2px solid gold;
+    border: 2px solid #FFD700;
     background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+
+    box-shadow:
+        0 0 10px #FFD700,
+        0 0 30px rgba(255,215,0,0.6),
+        0 0 60px rgba(255,215,0,0.4),
+        inset 0 0 20px rgba(255,215,0,0.2);
 }
 
-/* UPLOAD BUTTON */
-.upload-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
+/* INNER */
+.box::before {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 360px;
+    border-radius: 130px;
+    border: 1px dashed rgba(255,215,0,0.5);
+}
+
+/* BUTTONS */
+.upload-btn, .tool-btn, .main-btn {
     border: 1px solid gold;
-    border-radius: 10px;
-    background: transparent;
+    background: rgba(0,0,0,0.6);
     color: gold;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.upload-btn:hover {
+.upload-btn:hover,
+.tool-btn:hover,
+.main-btn:hover {
     background: gold;
     color: black;
+    box-shadow: 0 0 15px gold;
 }
 
-/* RESULT IMAGE */
-.result-img {
-    width: 90%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 15px;
-    margin-bottom: 10px;
+.upload-btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.tool-btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.tools {
+    display: flex;
+    flex-direction: column;
 }
 
 /* MAIN BUTTON */
@@ -113,17 +127,15 @@ body::before {
     margin: 30px auto;
     padding: 15px 50px;
     border-radius: 20px;
-    border: 1px solid gold;
-    background: transparent;
-    color: gold;
     font-size: 18px;
-    cursor: pointer;
-    transition: 0.3s;
 }
 
-.main-btn:hover {
-    background: gold;
-    color: black;
+/* IMAGE */
+.result-img {
+    width: 95%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 /* FOOTER */
@@ -135,57 +147,33 @@ body::before {
 .footer a {
     color: gold;
     margin: 0 10px;
-    text-decoration: none;
 }
+</style></head><body><div class="logo">HAMOUZI</div>
+<div class="line"></div><form action="/upload" method="POST" enctype="multipart/form-data"><div class="wrapper"><div class="ad">AD SPACE</div><!-- UPLOAD --><div class="box">
+<h3>Upload Image</h3><input type="file" name="file" id="fileInput" hidden required><button type="button" class="upload-btn"
+onclick="document.getElementById('fileInput').click()">
+اضغط لرفع الصورة
+</button>
 
-.footer a:hover {
-    text-decoration: underline;
-}
+<span id="fileName"></span>
 
-</style></head><body><!-- HEADER --><div class="header">
-    <div class="logo">HAMOUZI</div>
-    <a href="#"><button class="login-btn">تسجيل الدخول</button></a>
-</div><form action="/upload" method="POST" enctype="multipart/form-data"><div class="wrapper"><!-- LEFT AD -->
-<div class="ad">AD SPACE</div>
+</div><!-- TOOLS --><div class="tools">
+<button type="button" class="tool-btn">Crop</button>
+<button type="button" class="tool-btn">Compress</button>
+<button type="button" class="tool-btn">Convert</button>
+</div><!-- PREVIEW --><div class="box">{% if result_image %}
+<img class="result-img" src="data:image/png;base64,{{ result_image }}">
 
-<!-- UPLOAD -->
-<div class="box">
-    <h3>Upload Image</h3>
+<a download="result.png" href="data:image/png;base64,{{ result_image }}">
+<button type="button" class="upload-btn">Download</button>
+</a>{% else %}
 
-    <input type="file" name="file" id="fileInput" hidden required>
+<p>Preview</p>
+{% endif %}</div><div class="ad">AD SPACE</div></div><button class="main-btn">✨ Remove Background</button>
 
-    <button type="button" class="upload-btn"
-    onclick="document.getElementById('fileInput').click()">
-        اضغط لرفع الصورة
-    </button>
-
-    <span id="fileName"></span>
-</div>
-
-<!-- PREVIEW -->
-<div class="box">
-
-    {% if result_image %}
-        <img class="result-img" src="data:image/png;base64,{{ result_image }}">
-
-        <a download="result.png" href="data:image/png;base64,{{ result_image }}">
-            <button type="button" class="upload-btn">Download</button>
-        </a>
-
-    {% else %}
-        <p>Preview</p>
-    {% endif %}
-
-</div>
-
-<!-- RIGHT AD -->
-<div class="ad">AD SPACE</div>
-
-</div><button class="main-btn">✨ Remove Background</button>
-
-</form><!-- FOOTER --><div class="footer">
-    <a href="#">سياسة الخصوصية</a> |
-    <a href="#">اتصل بنا</a>
+</form><div class="footer">
+<a href="#">سياسة الخصوصية</a> |
+<a href="#">اتصل بنا</a>
 </div><script>
 document.getElementById("fileInput").addEventListener("change", function(){
     if(this.files.length > 0){
