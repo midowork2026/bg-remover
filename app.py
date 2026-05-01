@@ -3,7 +3,7 @@ from PIL import Image
 from rembg import remove
 import io, base64, os
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 @app.route('/')
 def index():
