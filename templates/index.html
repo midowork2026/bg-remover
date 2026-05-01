@@ -116,12 +116,12 @@ body::before {
     transition: 0.3s;
 }
 
-.upload-area:hover {
-    background: gold;
-    color: black;
-    box-shadow: 0 0 15px gold;
-}
+<label class="upload-area" for="fileInput">
+    <span id="fileName">اضغط لرفع الصورة</span>
+</label>
 
+<input type="file" name="file" id="fileInput" hidden required>
+    
 /* TOOLS */
 .tools {
     display: flex;
