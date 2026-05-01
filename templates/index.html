@@ -1,184 +1,180 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>HAMOUZI</title><style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI';
-    background: url("/static/bg.jpg") center/cover fixed;
-    color: white;
-}
+<title>HAMOUZI</title>
 
-/* OVERLAY */
-body::before {
-    content: "";
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    z-index: -1;
+<style>
+body{
+    margin:0;
+    font-family: Arial;
+    background: radial-gradient(circle,#222,#000);
+    color:#fff;
+    text-align:center;
 }
 
 /* LOGO */
-.logo {
-    text-align: center;
-    font-size: 70px;
-    font-weight: bold;
-    background: linear-gradient(to right, #FFD700, #ffcc00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-top: 20px;
+.logo{
+    font-size:40px;
+    color:gold;
+    margin-top:20px;
 }
 
-.line {
-    width: 250px;
-    height: 2px;
-    margin: 10px auto 30px;
-    background: linear-gradient(to right, transparent, gold, transparent);
+/* LOGIN */
+.login-btn{
+    position:absolute;
+    top:20px;
+    right:20px;
+    border:1px solid gold;
+    padding:8px 15px;
+    border-radius:10px;
+    color:gold;
+    text-decoration:none;
 }
 
-/* MAIN */
-.wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
+/* WRAPPER */
+.wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:40px;
+    margin-top:50px;
 }
 
-/* 🔥 ADS (خفيف جدًا زي ما طلبت) */
-.ad {
-    width: 150px;
-    height: 420px;
-    border-radius: 25px;
-    border: 1px solid rgba(255,215,0,0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: rgba(255,215,0,0.7);
+/* BOX */
+.box{
+    width:260px;
+    height:380px;
+    border:2px solid gold;
+    border-radius:130px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
 }
 
-/* 🔥 BOX (تقيل واحترافي) */
-.box {
-    width: 270px;
-    height: 420px;
-    border-radius: 150px;
-    border: 2px solid #FFD700;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    box-shadow:
-        0 0 10px #FFD700,
-        0 0 30px rgba(255,215,0,0.6),
-        0 0 60px rgba(255,215,0,0.4),
-        inset 0 0 20px rgba(255,215,0,0.2);
+/* IMPORTANT FIX */
+.box::before{
+    pointer-events:none;
 }
 
-/* INNER */
-.box::before {
-    content: "";
-    position: absolute;
-    width: 230px;
-    height: 360px;
-    border-radius: 130px;
-    border: 1px dashed rgba(255,215,0,0.5);
+/* AD */
+.ad{
+    width:120px;
+    height:350px;
+    border:1px solid rgba(255,215,0,0.2);
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:gold;
 }
 
-/* BUTTONS */
-.upload-btn, .tool-btn, .main-btn {
-    border: 1px solid gold;
-    background: rgba(0,0,0,0.6);
-    color: gold;
-    cursor: pointer;
-    transition: 0.3s;
+/* BUTTON */
+.upload-btn{
+    margin-top:15px;
+    padding:10px 20px;
+    border:1px solid gold;
+    border-radius:10px;
+    cursor:pointer;
 }
 
-.upload-btn:hover,
-.tool-btn:hover,
-.main-btn:hover {
-    background: gold;
-    color: black;
-    box-shadow: 0 0 15px gold;
-}
-
-.upload-btn {
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-
-.tool-btn {
-    padding: 10px 20px;
-    border-radius: 10px;
-    margin: 5px 0;
-}
-
-.tools {
-    display: flex;
-    flex-direction: column;
-}
-
-/* MAIN BUTTON */
-.main-btn {
-    display: block;
-    margin: 30px auto;
-    padding: 15px 50px;
-    border-radius: 20px;
-    font-size: 18px;
+/* REMOVE BTN */
+.remove-btn{
+    margin-top:30px;
+    padding:15px 40px;
+    border-radius:15px;
+    border:1px solid gold;
+    background:black;
+    color:gold;
+    cursor:pointer;
 }
 
 /* IMAGE */
-.result-img {
-    width: 95%;
-    height: 260px;
-    object-fit: cover;
-    border-radius: 15px;
+.result-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:130px;
+}
+
+/* DOWNLOAD */
+.download-btn{
+    margin-top:10px;
+    padding:10px 20px;
+    border:1px solid gold;
+    border-radius:10px;
+    color:gold;
+    text-decoration:none;
 }
 
 /* FOOTER */
-.footer {
-    text-align: center;
-    margin-top: 20px;
+.footer{
+    margin-top:30px;
 }
-
-.footer a {
-    color: gold;
-    margin: 0 10px;
+.footer a{
+    color:gold;
+    margin:0 10px;
 }
-</style></head><body><div class="logo">HAMOUZI</div>
-<div class="line"></div><form action="/upload" method="POST" enctype="multipart/form-data"><div class="wrapper"><div class="ad">AD SPACE</div><!-- UPLOAD --><div class="box">
-<h3>Upload Image</h3><input type="file" name="file" id="fileInput" hidden required><button type="button" class="upload-btn"
-onclick="document.getElementById('fileInput').click()">
-اضغط لرفع الصورة
-</button>
+</style>
+</head>
 
-<span id="fileName"></span>
+<body>
 
-</div><!-- TOOLS --><div class="tools">
-<button type="button" class="tool-btn">Crop</button>
-<button type="button" class="tool-btn">Compress</button>
-<button type="button" class="tool-btn">Convert</button>
-</div><!-- PREVIEW --><div class="box">{% if result_image %}
-<img class="result-img" src="data:image/png;base64,{{ result_image }}">
+<div class="logo">HAMOUZI</div>
 
-<a download="result.png" href="data:image/png;base64,{{ result_image }}">
-<button type="button" class="upload-btn">Download</button>
-</a>{% else %}
+<a href="/login" class="login-btn">تسجيل الدخول</a>
 
-<p>Preview</p>
-{% endif %}</div><div class="ad">AD SPACE</div></div><button class="main-btn">✨ Remove Background</button>
+<form action="/upload" method="POST" enctype="multipart/form-data">
 
-</form><div class="footer">
-<a href="#">سياسة الخصوصية</a> |
-<a href="#">اتصل بنا</a>
-</div><script>
-document.getElementById("fileInput").addEventListener("change", function(){
-    if(this.files.length > 0){
-        document.getElementById("fileName").innerText = this.files[0].name;
-    }
-});
-</script></body>
+<div class="wrapper">
+
+<div class="ad">AD</div>
+
+<!-- UPLOAD -->
+<div class="box">
+    <h3>Upload</h3>
+
+    <input type="file" name="file" id="fileInput" hidden required>
+
+    <label for="fileInput" class="upload-btn">
+        اضغط لرفع الصورة
+    </label>
+
+    <span id="fileName"></span>
+</div>
+
+<!-- PREVIEW -->
+<div class="box">
+
+{% if result_image %}
+    <img class="result-img" src="data:image/png;base64,{{ result_image }}">
+    
+    <a download="result.png"
+       href="data:image/png;base64,{{ result_image }}"
+       class="download-btn">
+       Download
+    </a>
+{% else %}
+    <h3>Preview</h3>
+{% endif %}
+
+</div>
+
+<div class="ad">AD</div>
+
+</div>
+
+<button class="remove-btn">Remove Background</button>
+
+</form>
+
+<div class="footer">
+    <a href="/privacy">سياسة الخصوصية</a>
+    |
+    <a href="/contact">اتصل بنا</a>
+</div>
+
+</body>
 </html>
