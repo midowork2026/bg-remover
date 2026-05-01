@@ -32,25 +32,29 @@ body::before{
 }
 
 /* LOGO - تم تكبير الخط هنا */
-.logo{
-    font-size:85px; 
-    color:gold;
-    font-weight:bold;
-    text-shadow:0 0 25px gold;
-    position: relative;
-    z-index: 2;
+/* الحاوية الجديدة عشان نضمن التوسط */
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* بيخلي كل اللي جواه في النص بالظبط */
+    justify-content: center;
+    flex-grow: 1; /* عشان ياخد المساحة اللي في النص بين الفراغ والزرار */
 }
 
-/* 🔥 GOLD LINE - تم تعديله ليصبح في منتصف الكلام تقريباً */
-.logo-line{
-    width:250px;
-    height:3px;
-    margin:-25px auto 0; /* الرقم السالب هو اللي بيرفع الخط لنص الكلام */
-    background:linear-gradient(to right, transparent, gold, transparent);
-    position: relative;
-    z-index: 1;
+.logo {
+    font-size: 85px; 
+    color: gold;
+    font-weight: bold;
+    text-shadow: 0 0 25px gold;
+    line-height: 1; /* بيشيل المسافات الزيادة فوق وتحت الكلمة */
 }
 
+.logo-line {
+    width: 250px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, gold, transparent);
+    margin-top: -20px; /* ارفع أو نزل من هنا لحد ما يظبط في نص الكلمة */
+}
 /* LOGIN BUTTON */
 .login-btn{
     padding:10px 20px;
@@ -188,13 +192,14 @@ body::before{
 <body>
 
 <div class="header">
-    <div></div>
-    <div class="logo">HAMOUZI</div>
+    <div style="width: 120px;"></div> <div class="logo-container">
+        <div class="logo">HAMOUZI</div>
+        <div class="logo-line"></div>
+    </div>
+
     <button class="login-btn">تسجيل الدخول</button>
 </div>
-
-<div class="logo-line"></div>
-
+    
 <form action="/upload" method="POST" enctype="multipart/form-data">
 
 <div class="wrapper">
