@@ -31,20 +31,24 @@ body::before{
     padding:20px 40px;
 }
 
-/* LOGO */
+/* LOGO - تم تكبير الخط هنا */
 .logo{
-    font-size:65px;
+    font-size:85px; 
     color:gold;
     font-weight:bold;
     text-shadow:0 0 25px gold;
+    position: relative;
+    z-index: 2;
 }
 
-/* 🔥 GOLD LINE تحت اللوجو */
+/* 🔥 GOLD LINE - تم تعديله ليصبح في منتصف الكلام تقريباً */
 .logo-line{
-    width:200px;
+    width:250px;
     height:3px;
-    margin:10px auto 0;
+    margin:-25px auto 0; /* الرقم السالب هو اللي بيرفع الخط لنص الكلام */
     background:linear-gradient(to right, transparent, gold, transparent);
+    position: relative;
+    z-index: 1;
 }
 
 /* LOGIN BUTTON */
@@ -82,6 +86,7 @@ body::before{
     align-items:center;
     position:relative;
     box-shadow:0 0 30px rgba(255,215,0,0.5);
+    overflow: hidden; /* عشان الصورة متطلعش برا الشكل البيضاوي */
 }
 
 /* UPLOAD DASH */
@@ -89,7 +94,7 @@ body::before{
     border-style:dashed;
 }
 
-/* AD (خفيف جدًا) */
+/* AD */
 .ad{
     width:120px;
     height:420px;
@@ -138,21 +143,16 @@ body::before{
     color:black;
 }
 
-/* PREVIEW BG */
+/* PREVIEW BG - تم إزالة الخلفية الشطرنجية هنا */
 .preview{
-    background:
-    linear-gradient(45deg,#444 25%, transparent 25%),
-    linear-gradient(-45deg,#444 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #444 75%),
-    linear-gradient(-45deg, transparent 75%, #444 75%);
-    background-size:20px 20px;
+    background: transparent; /* تم جعلها شفافة لتظهر الصورة فقط */
 }
 
 /* IMAGE */
 .result-img{
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain; /* خليتها contain عشان الصورة تظهر كاملة بدون قص */
     border-radius:180px;
 }
 
@@ -187,7 +187,6 @@ body::before{
 
 <body>
 
-<!-- 🔥 HEADER -->
 <div class="header">
     <div></div>
     <div class="logo">HAMOUZI</div>
@@ -202,7 +201,6 @@ body::before{
 
 <div class="ad">AD SPACE</div>
 
-<!-- UPLOAD -->
 <div class="box upload-box">
     <h3>Upload Image</h3>
 
@@ -213,14 +211,12 @@ body::before{
     </label>
 </div>
 
-<!-- TOOLS -->
 <div class="tools">
     <button type="button" class="tool-btn">Crop</button>
     <button type="button" class="tool-btn">Compress</button>
     <button type="button" class="tool-btn">Convert</button>
 </div>
 
-<!-- PREVIEW -->
 <div class="box preview">
 
 {% if result_image %}
