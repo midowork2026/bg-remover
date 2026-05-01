@@ -24,7 +24,7 @@ def upload():
 
         # 🔥 تقليل حجم الصورة (مهم عشان السيرفر ما يقعش)
         input_image = Image.open(file.stream).convert('RGBA')
-        input_image.thumbnail((800, 800))
+        input_image.thumbnail((1200, 1200))
 
         output_image = remove(input_image)
 
