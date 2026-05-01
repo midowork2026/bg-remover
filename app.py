@@ -5,7 +5,7 @@ import io
 import base64
 import os
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # الصفحة الرئيسية
 @app.route('/')
@@ -41,6 +41,6 @@ def upload():
         return render_template('index.html', error="حصل خطأ، جرب صورة أصغر")
 
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
