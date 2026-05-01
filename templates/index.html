@@ -14,7 +14,7 @@ body {
     color: white;
 }
 
-/* DARK OVERLAY */
+/* OVERLAY */
 body::before {
     content: "";
     position: fixed;
@@ -35,7 +35,7 @@ body::before {
     margin-top: 20px;
 }
 
-/* GOLD LINE */
+/* LINE */
 .line {
     width: 250px;
     height: 2px;
@@ -43,7 +43,7 @@ body::before {
     background: linear-gradient(to right, transparent, gold, transparent);
 }
 
-/* MAIN */
+/* LAYOUT */
 .wrapper {
     display: flex;
     justify-content: center;
@@ -61,26 +61,24 @@ body::before {
     justify-content: center;
     align-items: center;
     color: gold;
-    backdrop-filter: blur(10px);
 }
 
-/* OVAL BOX */
+/* BOX */
 .box {
-    position: relative;
     width: 270px;
     height: 420px;
     border-radius: 150px;
     border: 2px solid rgba(255,215,0,0.7);
     background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 20px rgba(255,215,0,0.2);
+    position: relative;
 }
 
-/* INNER DASHED */
+/* INNER DASH */
 .box::before {
     content: "";
     position: absolute;
@@ -116,12 +114,12 @@ body::before {
     transition: 0.3s;
 }
 
-<label class="upload-area" for="fileInput">
-    <span id="fileName">اضغط لرفع الصورة</span>
-</label>
+.upload-area:hover {
+    background: gold;
+    color: black;
+    box-shadow: 0 0 15px gold;
+}
 
-<input type="file" name="file" id="fileInput" hidden required>
-    
 /* TOOLS */
 .tools {
     display: flex;
@@ -137,13 +135,11 @@ body::before {
     background: rgba(0,0,0,0.6);
     color: gold;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .tools button:hover {
     background: gold;
     color: black;
-    box-shadow: 0 0 15px gold;
 }
 
 /* MAIN BUTTON */
@@ -157,13 +153,11 @@ body::before {
     color: gold;
     font-size: 20px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .main-btn:hover {
     background: gold;
     color: black;
-    box-shadow: 0 0 20px gold;
 }
 
 /* FOOTER */
@@ -172,18 +166,10 @@ body::before {
     margin-top: 30px;
 }
 
-.footer p {
-    color: #aaa;
-}
-
 .footer a {
     color: gold;
     margin: 0 10px;
     text-decoration: none;
-}
-
-.footer a:hover {
-    text-decoration: underline;
 }
 
 </style>
@@ -206,10 +192,12 @@ body::before {
         <h3>Upload Image</h3>
         <p>Click to upload</p>
 
-        <label class="upload-area">
-            <input type="file" name="file" required hidden id="fileInput">
+        <!-- زرار الرفع الصح -->
+        <label for="fileInput" class="upload-area">
             <span id="fileName">اضغط لرفع الصورة</span>
         </label>
+
+        <input type="file" id="fileInput" name="file" hidden required>
     </div>
 
     <!-- TOOLS -->
@@ -248,7 +236,7 @@ body::before {
     <p>© 2025 HAMOUZI</p>
 </div>
 
-<!-- SCRIPT -->
+<!-- السكربت الصح -->
 <script>
 document.getElementById("fileInput").addEventListener("change", function(){
     if(this.files.length > 0){
