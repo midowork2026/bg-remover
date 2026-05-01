@@ -7,6 +7,7 @@
 
 <style>
 
+/* ===== BODY ===== */
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -43,7 +44,7 @@ body::before {
     background: linear-gradient(to right, transparent, gold, transparent);
 }
 
-/* LAYOUT */
+/* MAIN WRAPPER */
 .wrapper {
     display: flex;
     justify-content: center;
@@ -75,17 +76,6 @@ body::before {
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 20px rgba(255,215,0,0.2);
-    position: relative;
-}
-
-/* INNER DASH */
-.box::before {
-    content: "";
-    position: absolute;
-    width: 230px;
-    height: 360px;
-    border-radius: 130px;
-    border: 1px dashed rgba(255,215,0,0.4);
 }
 
 /* ICON */
@@ -192,12 +182,13 @@ body::before {
         <h3>Upload Image</h3>
         <p>Click to upload</p>
 
-        <!-- زرار الرفع الصح -->
-        <label for="fileInput" class="upload-area">
-            <span id="fileName">اضغط لرفع الصورة</span>
-        </label>
+        <!-- INPUT مخفي -->
+        <input type="file" id="fileInput" name="file" required style="display:none;">
 
-        <input type="file" id="fileInput" name="file" hidden required>
+        <!-- زرار فعلي -->
+        <div class="upload-area" onclick="openFile()">
+            <span id="fileName">اضغط لرفع الصورة</span>
+        </div>
     </div>
 
     <!-- TOOLS -->
@@ -223,7 +214,7 @@ body::before {
 
 </div>
 
-<button class="main-btn">✨ Remove Background</button>
+<button type="submit" class="main-btn">✨ Remove Background</button>
 
 </form>
 
@@ -236,8 +227,12 @@ body::before {
     <p>© 2025 HAMOUZI</p>
 </div>
 
-<!-- السكربت الصح -->
+<!-- SCRIPT -->
 <script>
+function openFile() {
+    document.getElementById("fileInput").click();
+}
+
 document.getElementById("fileInput").addEventListener("change", function(){
     if(this.files.length > 0){
         document.getElementById("fileName").innerText = this.files[0].name;
