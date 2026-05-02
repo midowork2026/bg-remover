@@ -26,7 +26,13 @@
             border: none; background: gold; color: #000; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
         .submit-btn:hover { box-shadow: 0 0 20px gold; transform: scale(1.02); }
-        .back-link { display: block; margin-top: 20px; color: gold; text-decoration: none; font-size: 14px; }
+        
+        /* التعديل الجديد هنا */
+        .register-text { margin-top: 20px; font-size: 14px; color: #ccc; }
+        .register-link { color: gold; text-decoration: none; font-weight: bold; margin-left: 5px; transition: 0.3s; }
+        .register-link:hover { text-shadow: 0 0 10px gold; }
+        
+        .back-link { display: block; margin-top: 20px; color: rgba(255,255,255,0.4); text-decoration: none; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -38,6 +44,11 @@
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit" class="submit-btn">Login</button>
         </form>
+        
+        <div class="register-text">
+            Don't have an account? <a href="/register" class="register-link">Register Now</a>
+        </div>
+
         <a href="/" class="back-link">← Back to Home</a>
     </div>
 </body>
