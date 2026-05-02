@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HAMOUZI - AI Background Remover</title>
     <style>
+        /* 1. التعديلات الأساسية والخلفية المتحركة */
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,7 +19,24 @@
             overflow-x: hidden;
         }
 
-        /* --- البرواز الذهبي (لازم يكون ثابت وموجود) --- */
+        /* جزيئات الذكاء الاصطناعي المتحركة في الخلفية */
+        @keyframes moveParticles {
+            0% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+            50% { transform: translateY(-20px) translateX(10px); opacity: 0.2; }
+            100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: -50px; left: -50px; right: -50px; bottom: -50px;
+            background-image: radial-gradient(gold 1px, transparent 1px);
+            background-size: 80px 80px;
+            opacity: 0.12;
+            animation: moveParticles 15s linear infinite;
+            z-index: -1;
+        }
+
         body::after {
             content: "";
             position: fixed;
@@ -30,170 +47,276 @@
             z-index: 9999;
         }
 
-        /* --- مطر النجوم المائل لليسار --- */
-        @keyframes dotRain {
-            0% { transform: translate(100px, -100px); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translate(-200px, 100vh); opacity: 0; }
-        }
-        .dot-rain-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none;
-        }
-        .dot {
-            position: absolute;
-            width: 2px; height: 2px;
-            background-color: gold;
-            border-radius: 50%;
-            opacity: 0;
-            box-shadow: 0 0 5px gold;
-            animation: dotRain linear infinite;
-        }
-        .dot:nth-child(1) { left: 10%; animation-duration: 8s; }
-        .dot:nth-child(2) { left: 30%; animation-duration: 12s; animation-delay: 2s; }
-        .dot:nth-child(3) { left: 50%; animation-duration: 10s; animation-delay: 4s; }
-        .dot:nth-child(4) { left: 70%; animation-duration: 14s; animation-delay: 1s; }
-        .dot:nth-child(5) { left: 90%; animation-duration: 9s; animation-delay: 3s; }
-
-        /* --- الهيدر (ترتيب ثلاثي ثابت) --- */
+        /* 2. الهيدر واللوجو المطور */
         .header {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             padding: 20px 40px;
-            position: relative;
-            z-index: 10;
         }
 
-        .left-nav { display: flex; gap: 15px; width: 200px; justify-content: flex-start; }
-        .nav-icon {
-            width: 38px; height: 38px;
-            border: 1px solid gold; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            color: gold; text-decoration: none; font-size: 14px;
-            background: rgba(255, 215, 0, 0.05); transition: 0.3s;
+        .logo-section {
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .nav-icon:hover { background: gold; color: black; box-shadow: 0 0 20px gold; transform: translateY(-3px); }
 
-        .logo-section { flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
         .logo {
             font-size: clamp(45px, 15vw, 85px); 
-            color: gold; font-weight: bold;
+            color: gold;
+            font-weight: bold;
             text-shadow: 0 0 25px gold;
-            margin: 0; cursor: pointer;
-            transition: 0.4s ease-in-out;
+            margin: 0;
+            transition: 0.3s;
+            cursor: pointer;
         }
-        .logo:hover { text-shadow: 0 0 50px gold, 0 0 80px gold; transform: scale(1.05); }
+        .logo:hover { text-shadow: 0 0 45px gold; transform: scale(1.02); }
 
-        @keyframes shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        /* خط اللوجو اللامع المتحرك */
+        @keyframes shine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
         .logo-line {
-            width: 250px; height: 4px;
-            background: linear-gradient(to right, transparent, gold, transparent);
+            width: clamp(150px, 50vw, 280px);
+            height: 4px;
+            background: linear-gradient(to right, transparent 0%, gold 50%, transparent 100%);
             background-size: 200% 100%;
+            margin-top: 5px;
+            box-shadow: 0 0 15px gold;
             animation: shine 3s linear infinite;
-            box-shadow: 0 0 10px gold;
         }
 
-        .auth-section { width: 200px; display: flex; justify-content: flex-end; }
+        .auth-section {
+            grid-column: 3;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .user-circle {
+            width: 45px;
+            height: 45px;
+            background: gold;
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 20px gold;
+            font-size: 20px;
+        }
+
         .login-btn {
-            padding: 10px 25px; border-radius: 12px; border: 1px solid gold;
-            color: gold; text-decoration: none; font-weight: bold; transition: 0.3s;
+            padding: 10px 25px;
+            border-radius: 12px;
+            border: 1px solid gold;
+            background: transparent;
+            color: gold;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: bold;
         }
-        .login-btn:hover { background: gold; color: black; box-shadow: 0 0 20px gold; }
+        .login-btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; }
 
-        /* --- المحتوى (البوكسات) --- */
+        /* 3. المحتوى والبوكسات */
         .wrapper {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 30px; margin-top: 40px; padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
+            padding: 0 20px;
         }
-        @media (min-width: 1024px) { .wrapper { flex-direction: row; justify-content: center; } }
+
+        @media (min-width: 1024px) {
+            .wrapper { flex-direction: row; justify-content: center; align-items: center; }
+        }
+
+        .ad-space {
+            display: none;
+        }
+
+        @media (min-width: 1200px) {
+            .ad-space {
+                display: flex; width: 120px; height: 500px;
+                border: 1px solid rgba(255, 215, 0, 0.1);
+                border-radius: 20px; align-items: center; justify-content: center;
+                color: rgba(255, 215, 0, 0.4); font-size: 11px; writing-mode: vertical-rl;
+                background: rgba(255, 215, 0, 0.03);
+                transition: 0.3s;
+            }
+            .ad-space:hover { border-color: gold; color: gold; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
+        }
 
         .box {
-            width: 100%; max-width: 320px; height: 480px;
-            border-radius: 160px; border: 2px solid gold;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: rgba(255, 255, 255, 0.02); transition: 0.4s;
+            width: 100%;
+            max-width: 320px;
+            height: 480px;
+            border-radius: 160px;
+            border: 2px solid gold;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+            transition: 0.4s;
         }
-        .box:hover { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); transform: translateY(-5px); }
+        .box:hover { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); border-color: #fff; transform: translateY(-5px); }
 
-        .tools-container { display: flex; flex-direction: column; gap: 15px; }
-        .tool-btn {
-            width: 140px; padding: 12px; border-radius: 15px;
-            border: 1px solid gold; color: gold; font-weight: bold;
-            background: transparent; cursor: pointer; transition: 0.3s;
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
-        .tool-btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; transform: scale(1.1); }
+        @media (min-width: 1024px) { .tools-container { display: flex; flex-direction: column; } }
+
+        .tool-btn {
+            width: 140px;
+            padding: 12px;
+            border-radius: 15px;
+            border: 1px solid gold;
+            background: transparent;
+            color: gold;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .tool-btn:hover { background: gold; color: #000; box-shadow: 0 0 25px gold; transform: scale(1.1); }
 
         .remove-btn {
-            margin: 50px auto; width: 90%; max-width: 450px;
-            padding: 18px; border-radius: 15px; border: 2px solid gold;
-            background: rgba(255, 215, 0, 0.1); color: gold; font-size: 22px;
-            font-weight: bold; cursor: pointer; transition: 0.3s;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 450px;
+            padding: 18px;
+            border-radius: 15px;
+            border: 2px solid gold;
+            background: rgba(255, 215, 0, 0.1);
+            color: gold;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+            transition: 0.3s;
         }
-        .remove-btn:hover { background: gold; color: #000; box-shadow: 0 0 50px gold; }
+        .remove-btn:hover { background: gold; color: #000; box-shadow: 0 0 50px gold; transform: scale(1.05); }
 
-        /* --- الفوتر --- */
-        .footer-container {
-            margin-top: 80px; padding: 40px 80px;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
-            display: flex; justify-content: space-between; align-items: center;
+        .upload-btn {
+            padding: 12px 30px;
+            border: 1px solid gold;
+            border-radius: 15px;
+            cursor: pointer;
+            color: gold;
+            font-weight: bold;
+            transition: 0.3s;
         }
-        @media (max-width: 768px) { .footer-container { flex-direction: column; gap: 20px; } }
+        .upload-btn:hover { background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 15px gold; }
+
+        /* الفوتر */
+        .trust-bar {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 15px; margin-top: 30px; color: rgba(255,255,255,0.7); font-size: 13px;
+        }
+
+        .footer-container {
+            margin-top: 80px; padding: 40px 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            display: flex; flex-direction: column; gap: 20px; align-items: center;
+        }
+        @media (min-width: 768px) {
+            .footer-container { flex-direction: row; justify-content: space-between; padding: 40px 80px; }
+        }
         .footer-link { color: #fff; text-decoration: none; font-size: 14px; transition: 0.3s; }
-        .footer-link:hover { color: gold; }
+        .footer-link:hover { color: gold; text-shadow: 0 0 10px gold; }
     </style>
 </head>
 <body>
-    <div class="dot-rain-container">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    </div>
 
     <div class="header">
-        <div class="left-nav">
-            <a href="/" class="nav-icon" title="Home">🏠</a>
-            <div class="nav-icon" title="Dark Mode">🌙</div>
-            <div class="nav-icon" title="Language">EN</div>
-        </div>
         <div class="logo-section">
             <h1 class="logo">HAMOUZI</h1>
             <div class="logo-line"></div>
         </div>
+
         <div class="auth-section">
-            <a href="/login" class="login-btn">Login</a>
+            {% if user_email %}
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                    <div class="user-circle" title="{{ user_email }}" style="cursor: pointer;">
+                        {{ user_email[0] | upper }}
+                    </div>
+                    <a href="/logout" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 11px;">Logout</a>
+                </div>
+            {% else %}
+                <a href="/login" class="login-btn">Login</a>
+            {% endif %}
         </div>
     </div>
 
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="wrapper">
+            <div class="ad-space" style="flex-direction: column;">
+                <img src="https://img.icons8.com/isometric-folders/100/null/brain.png" style="width: 45px; opacity:0.5; margin-bottom: 15px;">
+                AI PROCESSOR
+            </div>
+
             <div class="box">
-                <h3 style="color:gold;">Upload</h3>
+                <h3 style="color:gold; text-shadow: 0 0 10px gold;">Upload Image</h3>
                 <input type="file" name="file" id="fileInput" hidden required>
-                <label for="fileInput" class="tool-btn" style="padding: 12px 30px; display: inline-block;">Choose File</label>
+                <label for="fileInput" id="label-text" class="upload-btn">Choose File</label>
+                <div id="file-name" style="margin-top:15px; color:gold; font-size:12px;">No file chosen</div>
+                <div id="loader" style="display:none; color:gold; font-weight:bold; margin-top:15px;">Processing<span id="dots">...</span></div>
             </div>
+
             <div class="tools-container">
-                <button type="button" class="tool-btn">Crop</button>
-                <button type="button" class="tool-btn">Compress</button>
-                <button type="button" class="tool-btn">Convert</button>
+                <a href="/crop"><button type="button" class="tool-btn">Crop Image</button></a>
+                <a href="/compress"><button type="button" class="tool-btn">Compress</button></a>
+                <a href="/convert"><button type="button" class="tool-btn">Convert</button></a>
+                <a href="/merge"><button type="button" class="tool-btn">Merge</button></a>
             </div>
+
             <div class="box">
-                <p style="opacity:0.3;">Preview</p>
+                {% if result_image %}
+                    <img src="data:image/png;base64,{{ result_image }}" style="max-width:85%; border-radius:20px; box-shadow: 0 0 30px gold;">
+                {% else %}
+                    <h3 style="color:gold; opacity:0.3;">Preview</h3>
+                    <p style="font-size:12px; opacity:0.2;">Result appears here</p>
+                {% endif %}
+            </div>
+
+            <div class="ad-space" style="flex-direction: column;">
+                <img src="https://img.icons8.com/isometric-folders/100/null/robot.png" style="width: 45px; opacity:0.5; margin-bottom: 15px;">
+                SMART REMOVAL
             </div>
         </div>
+
         <button type="submit" class="remove-btn">🪄 Remove Background</button>
+
+        <div class="trust-bar">
+            <div>🛡️ 100% Secure</div>
+            <div style="color:gold;">|</div>
+            <div>🔒 Privacy Protected</div>
+            <div style="color:gold;">|</div>
+            <div>🏅 AI Powered</div>
+        </div>
     </form>
 
     <div class="footer-container">
         <a href="/privacy" class="footer-link">Privacy Policy</a>
-        <div style="color:rgba(255,255,255,0.4); font-size:12px;">© 2026 HAMOUZI</div>
+        <div style="color:rgba(255,255,255,0.4); font-size:12px;">© 2026 HAMOUZI - All Rights Reserved</div>
         <a href="/contact" class="footer-link">Contact Us</a>
     </div>
 
     <script>
         const fileInput = document.getElementById('fileInput');
-        fileInput.onchange = () => { if(fileInput.files[0]) console.log("File selected"); };
+        const fileName = document.getElementById('file-name');
+        fileInput.onchange = () => { if(fileInput.files[0]) fileName.innerText = "Selected: " + fileInput.files[0].name; };
+        document.getElementById('uploadForm').onsubmit = () => {
+            document.getElementById('label-text').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+        };
     </script>
 </body>
 </html>
