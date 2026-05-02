@@ -18,7 +18,7 @@
             overflow-x: hidden;
         }
 
-        /* البرواز الذهبي */
+        /* البرواز الذهبي المضيء */
         body::after {
             content: "";
             position: fixed;
@@ -29,12 +29,13 @@
             z-index: 9999;
         }
 
-        /* الهيدر */
+        /* الهيدر المنظم */
         .header {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            min-height: 150px; /* مساحة ثابتة للهيدر عشان مياثرش على اللي تحته */
         }
 
         .logo {
@@ -45,7 +46,6 @@
             margin: 0;
             transition: 0.3s;
         }
-        .logo:hover { text-shadow: 0 0 40px gold; transform: scale(1.02); }
 
         .logo-line {
             width: clamp(150px, 50vw, 280px);
@@ -54,6 +54,37 @@
             margin-top: 5px;
             box-shadow: 0 0 10px gold;
         }
+
+        /* منطقة أيقونة الحساب */
+        .user-area {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .user-icon {
+            width: 45px;
+            height: 45px;
+            background: gold;
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 20px gold;
+            font-size: 20px;
+        }
+
+        .logout-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 11px;
+            transition: 0.3s;
+        }
+        .logout-link:hover { color: gold; }
 
         .login-btn {
             margin-top: 15px;
@@ -67,35 +98,26 @@
         }
         .login-btn:hover { background: gold; color: #000; box-shadow: 0 0 15px gold; }
 
-        /* المحتوى */
+        /* منطقة المحتوى - الـ Wrapper */
         .wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 25px;
-            margin-top: 30px;
+            margin-top: 10px;
             padding: 0 20px;
         }
 
         @media (min-width: 1024px) {
-            .wrapper { flex-direction: row; justify-content: center; }
+            .wrapper { flex-direction: row; justify-content: center; align-items: center; }
         }
 
-        .ad-space { display: none; }
-        @media (min-width: 1200px) {
-            .ad-space {
-                display: flex; width: 120px; height: 450px;
-                border: 1px solid rgba(255, 215, 0, 0.1);
-                border-radius: 20px; align-items: center; justify-content: center;
-                color: rgba(255, 215, 0, 0.2); font-size: 12px; writing-mode: vertical-rl;
-            }
-        }
-
+        /* الصناديق البيضاوية (البيضاوية المثالية) */
         .box {
             width: 100%;
             max-width: 320px;
             height: 480px;
-            border-radius: 160px;
+            border-radius: 160px; /* الحفاظ على الشكل البيضاوي */
             border: 2px solid gold;
             display: flex;
             flex-direction: column;
@@ -132,7 +154,7 @@
             margin: 40px auto;
             width: 90%;
             max-width: 450px;
-            padding: 15px;
+            padding: 18px;
             border-radius: 15px;
             border: 2px solid gold;
             background: rgba(255, 215, 0, 0.1);
@@ -154,17 +176,22 @@
             font-weight: bold;
             transition: 0.3s;
         }
-        .upload-btn:hover { background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 10px gold; }
+        .upload-btn:hover { background: rgba(255, 215, 0, 0.2); }
 
-        #file-name { margin-top: 15px; font-size: 13px; color: gold; }
+        #file-name { margin-top: 15px; font-size: 13px; color: gold; padding: 0 10px; }
 
         .loading-container { display: none; color: gold; font-weight: bold; margin-top: 15px; }
         .dots:after { content: '.'; animation: dots 1.5s steps(5, end) infinite; }
         @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60% { content: '...'; } 80%, 100% { content: ''; } }
 
-        .trust-bar {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 15px; margin-top: 20px; color: rgba(255,255,255,0.7); font-size: 12px;
+        .ad-space { display: none; }
+        @media (min-width: 1200px) {
+            .ad-space {
+                display: flex; width: 100px; height: 400px;
+                border: 1px solid rgba(255, 215, 0, 0.1);
+                border-radius: 20px; align-items: center; justify-content: center;
+                color: rgba(255, 215, 0, 0.2); font-size: 12px; writing-mode: vertical-rl;
+            }
         }
 
         .footer-container {
@@ -176,29 +203,30 @@
             .footer-container { flex-direction: row; justify-content: space-between; padding: 30px 60px; }
         }
         .footer-link { color: #fff; text-decoration: none; font-size: 14px; transition: 0.3s; }
-        .footer-link:hover { color: gold; text-shadow: 0 0 10px gold; }
+        .footer-link:hover { color: gold; }
     </style>
 </head>
 <body>
 
-<div class="header">
+    <div class="header">
         <h1 class="logo">HAMOUZI</h1>
         <div class="logo-line"></div>
         
         {% if user_email %}
-            <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
-                <div title="{{ user_email }}" style="width: 40px; height: 40px; background: gold; color: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; box-shadow: 0 0 15px gold;">
+            <div class="user-area">
+                <div class="user-icon" title="{{ user_email }}">
                     {{ user_email[0] | upper }}
                 </div>
-                <a href="/logout" style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px;">Logout</a>
+                <a href="/logout" class="logout-link">Logout</a>
             </div>
         {% else %}
             <a href="/login" class="login-btn">Login</a>
         {% endif %}
+    </div>
 
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="wrapper">
-            <div class="ad-space">ADVERTISING SPACE</div>
+            <div class="ad-space">ADVERTISING</div>
 
             <div class="box">
                 <h3 style="color:gold;">Upload Image</h3>
@@ -210,38 +238,30 @@
 
             <div class="tools-container">
                 <a href="/crop"><button type="button" class="tool-btn">Crop Image</button></a>
-                <a href="/compress"><button type="button" class="tool-btn">Compress Image</button></a>
-                <a href="/convert"><button type="button" class="tool-btn">Convert Format</button></a>
-                <a href="/merge"><button type="button" class="tool-btn">Merge Images</button></a>
+                <a href="/compress"><button type="button" class="tool-btn">Compress</button></a>
+                <a href="/convert"><button type="button" class="tool-btn">Convert</button></a>
+                <a href="/merge"><button type="button" class="tool-btn">Merge</button></a>
             </div>
 
             <div class="box">
                 {% if result_image %}
-                    <img src="data:image/png;base64,{{ result_image }}" style="max-width:85%; border-radius:20px; box-shadow: 0 0 20px gold;">
+                    <img src="data:image/png;base64,{{ result_image }}" style="max-width:80%; max-height:80%; border-radius:20px; box-shadow: 0 0 20px gold;">
                 {% else %}
                     <h3 style="color:gold; opacity:0.4;">Preview</h3>
-                    <p style="font-size:12px; opacity:0.3;">Result will appear here</p>
+                    <p style="font-size:12px; opacity:0.3;">Your result here</p>
                 {% endif %}
             </div>
 
-            <div class="ad-space">ADVERTISING SPACE</div>
+            <div class="ad-space">ADVERTISING</div>
         </div>
 
         <button type="submit" class="remove-btn">🪄 Remove Background</button>
-
-        <div class="trust-bar">
-            <div>🛡️ 100% Secure</div>
-            <div style="color:gold;">|</div>
-            <div>🔒 No data is stored</div>
-            <div style="color:gold;">|</div>
-            <div>🏅 High Quality</div>
-        </div>
     </form>
 
     <div class="footer-container">
-        <a href="/privacy" class="footer-link">🛡️ Privacy Policy</a>
-        <div style="color:rgba(255,255,255,0.4); font-size:12px;">© 2026 HAMOUZI. All rights reserved.</div>
-        <a href="/contact" class="footer-link">📞 Contact Us</a>
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+        <div style="color:rgba(255,255,255,0.4); font-size:12px;">© 2026 HAMOUZI</div>
+        <a href="/contact" class="footer-link">Contact Us</a>
     </div>
 
     <script>
