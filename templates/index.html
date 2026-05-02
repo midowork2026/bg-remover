@@ -19,7 +19,7 @@
             overflow-x: hidden;
         }
 
-        /* جزيئات الذكاء الاصطناعي المتحركة في الخلفية */
+        /* جزيئات الذكاء الاصطناعي المتحركة */
         @keyframes moveParticles {
             0% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
             50% { transform: translateY(-20px) translateX(10px); opacity: 0.2; }
@@ -47,19 +47,18 @@
             z-index: 9999;
         }
 
-        /* 2. الهيدر واللوجو المطور */
+        /* 2. الهيدر والأزرار */
         .header {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            padding: 25px 40px; /* زيادة بسيطة في البادينج */
+            padding: 25px 40px;
         }
 
-        /* التعديل هنا: إضافة مسافات متساوية بين الأزرار */
         .controls-section {
             grid-column: 1;
             display: flex;
-            gap: 20px; /* المسافة المتساوية بين الأزرار */
+            gap: 20px;
             justify-content: flex-start;
         }
 
@@ -77,7 +76,6 @@
             transition: 0.3s;
             text-decoration: none;
             font-size: 20px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
         }
 
         .control-btn:hover {
@@ -101,13 +99,6 @@
             text-shadow: 0 0 25px gold;
             margin: 0;
             transition: 0.3s;
-            cursor: pointer;
-        }
-        .logo:hover { text-shadow: 0 0 45px gold; transform: scale(1.02); }
-
-        @keyframes shine {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
         }
 
         .logo-line {
@@ -120,6 +111,11 @@
             animation: shine 3s linear infinite;
         }
 
+        @keyframes shine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
         .auth-section {
             grid-column: 3;
             display: flex;
@@ -127,28 +123,15 @@
         }
 
         .user-circle {
-            width: 45px;
-            height: 45px;
-            background: gold;
-            color: black;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            box-shadow: 0 0 20px gold;
-            font-size: 20px;
+            width: 45px; height: 45px; background: gold; color: #000;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-weight: bold; box-shadow: 0 0 20px gold;
         }
 
         .login-btn {
-            padding: 10px 25px;
-            border-radius: 12px;
-            border: 1px solid gold;
-            background: transparent;
-            color: gold;
-            text-decoration: none;
-            transition: 0.3s;
-            font-weight: bold;
+            padding: 10px 25px; border-radius: 12px; border: 1px solid gold;
+            background: transparent; color: gold; text-decoration: none;
+            transition: 0.3s; font-weight: bold;
         }
         .login-btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; }
 
@@ -166,22 +149,7 @@
             .wrapper { flex-direction: row; justify-content: center; align-items: center; }
         }
 
-        .ad-space {
-            display: none;
-        }
-
-        @media (min-width: 1200px) {
-            .ad-space {
-                display: flex; width: 120px; height: 500px;
-                border: 1px solid rgba(255, 215, 0, 0.1);
-                border-radius: 20px; align-items: center; justify-content: center;
-                color: rgba(255, 215, 0, 0.4); font-size: 11px; writing-mode: vertical-rl;
-                background: rgba(255, 215, 0, 0.03);
-                transition: 0.3s;
-            }
-            .ad-space:hover { border-color: gold; color: gold; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
-        }
-
+        /* بوكس المعاينة المعدل لإخفاء الإطار عند وجود صورة */
         .box {
             width: 100%;
             max-width: 320px;
@@ -195,8 +163,25 @@
             background: rgba(255, 255, 255, 0.03);
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
             transition: 0.4s;
+            overflow: hidden; /* لمنع خروج الصورة عن الحدود */
+            position: relative;
         }
-        .box:hover { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); border-color: #fff; transform: translateY(-5px); }
+
+        /* حالة خاصة للبوكس عندما يحتوي على الصورة الناتجة */
+        .box.has-result {
+            border: none; /* إلغاء الإطار الذهبي البيضوي */
+            background: transparent; /* إلغاء الخلفية */
+            box-shadow: none;
+            border-radius: 20px; /* تدوير بسيط للحواف للصورة نفسها */
+        }
+
+        .result-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)); /* توهج حول الشخصية */
+            border-radius: 15px;
+        }
 
         .tools-container {
             display: grid;
@@ -206,59 +191,30 @@
         @media (min-width: 1024px) { .tools-container { display: flex; flex-direction: column; } }
 
         .tool-btn {
-            width: 140px;
-            padding: 12px;
-            border-radius: 15px;
-            border: 1px solid gold;
-            background: transparent;
-            color: gold;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
+            width: 140px; padding: 12px; border-radius: 15px; border: 1px solid gold;
+            background: transparent; color: gold; cursor: pointer; font-weight: bold; transition: 0.3s;
         }
         .tool-btn:hover { background: gold; color: #000; box-shadow: 0 0 25px gold; transform: scale(1.1); }
 
         .remove-btn {
-            margin: 50px auto;
-            width: 90%;
-            max-width: 450px;
-            padding: 18px;
-            border-radius: 15px;
-            border: 2px solid gold;
-            background: rgba(255, 215, 0, 0.1);
-            color: gold;
-            font-size: 22px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 15px;
-            transition: 0.3s;
+            margin: 50px auto; width: 90%; max-width: 450px; padding: 18px;
+            border-radius: 15px; border: 2px solid gold; background: rgba(255, 215, 0, 0.1);
+            color: gold; font-size: 22px; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 15px; transition: 0.3s;
         }
         .remove-btn:hover { background: gold; color: #000; box-shadow: 0 0 50px gold; transform: scale(1.05); }
 
         .upload-btn {
-            padding: 12px 30px;
-            border: 1px solid gold;
-            border-radius: 15px;
-            cursor: pointer;
-            color: gold;
-            font-weight: bold;
-            transition: 0.3s;
+            padding: 12px 30px; border: 1px solid gold; border-radius: 15px;
+            cursor: pointer; color: gold; font-weight: bold; transition: 0.3s;
         }
         .upload-btn:hover { background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 15px gold; }
 
-        .trust-bar {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 15px; margin-top: 30px; color: rgba(255,255,255,0.7); font-size: 13px;
-        }
-
         .footer-container {
-            margin-top: 80px; padding: 40px 20px;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 80px; padding: 40px 20px; border-top: 1px solid rgba(255, 215, 0, 0.2);
             display: flex; flex-direction: column; gap: 20px; align-items: center;
         }
-        @media (min-width: 768px) {
-            .footer-container { flex-direction: row; justify-content: space-between; padding: 40px 80px; }
-        }
+        @media (min-width: 768px) { .footer-container { flex-direction: row; justify-content: space-between; padding: 40px 80px; } }
         .footer-link { color: #fff; text-decoration: none; font-size: 14px; transition: 0.3s; }
         .footer-link:hover { color: gold; text-shadow: 0 0 10px gold; }
     </style>
@@ -281,9 +237,7 @@
         <div class="auth-section">
             {% if user_email %}
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                    <div class="user-circle" title="{{ user_email }}" style="cursor: pointer;">
-                        {{ user_email[0] | upper }}
-                    </div>
+                    <div class="user-circle">{{ user_email[0] | upper }}</div>
                     <a href="/logout" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 11px;">Logout</a>
                 </div>
             {% else %}
@@ -294,50 +248,36 @@
 
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="wrapper">
-            <div class="ad-space" style="flex-direction: column;">
-                <img src="https://img.icons8.com/isometric-folders/100/null/brain.png" style="width: 45px; opacity:0.5; margin-bottom: 15px;">
-                AI PROCESSOR
-            </div>
+            <div style="display: flex; width: 120px; height: 500px; border: 1px solid rgba(255, 215, 0, 0.1); border-radius: 20px; align-items: center; justify-content: center; color: rgba(255, 215, 0, 0.4); font-size: 11px; writing-mode: vertical-rl; background: rgba(255, 215, 0, 0.03);">AI PROCESSOR</div>
 
             <div class="box">
                 <h3 style="color:gold; text-shadow: 0 0 10px gold;">Upload Image</h3>
                 <input type="file" name="file" id="fileInput" hidden required>
                 <label for="fileInput" id="label-text" class="upload-btn">Choose File</label>
                 <div id="file-name" style="margin-top:15px; color:gold; font-size:12px;">No file chosen</div>
-                <div id="loader" style="display:none; color:gold; font-weight:bold; margin-top:15px;">Processing<span id="dots">...</span></div>
+                <div id="loader" style="display:none; color:gold; font-weight:bold; margin-top:15px;">Processing...</div>
             </div>
 
             <div class="tools-container">
-                <a href="/crop"><button type="button" class="tool-btn">Crop Image</button></a>
-                <a href="/compress"><button type="button" class="tool-btn">Compress</button></a>
-                <a href="/convert"><button type="button" class="tool-btn">Convert</button></a>
-                <a href="/merge"><button type="button" class="tool-btn">Merge</button></a>
+                <button type="button" class="tool-btn">Crop Image</button>
+                <button type="button" class="tool-btn">Compress</button>
+                <button type="button" class="tool-btn">Convert</button>
+                <button type="button" class="tool-btn">Merge</button>
             </div>
 
-            <div class="box">
+            <div class="box {% if result_image %}has-result{% endif %}">
                 {% if result_image %}
-                    <img src="data:image/png;base64,{{ result_image }}" style="max-width:85%; border-radius:20px; box-shadow: 0 0 30px gold;">
+                    <img src="data:image/png;base64,{{ result_image }}" class="result-img">
                 {% else %}
                     <h3 style="color:gold; opacity:0.3;">Preview</h3>
                     <p style="font-size:12px; opacity:0.2;">Result appears here</p>
                 {% endif %}
             </div>
 
-            <div class="ad-space" style="flex-direction: column;">
-                <img src="https://img.icons8.com/isometric-folders/100/null/robot.png" style="width: 45px; opacity:0.5; margin-bottom: 15px;">
-                SMART REMOVAL
-            </div>
+            <div style="display: flex; width: 120px; height: 500px; border: 1px solid rgba(255, 215, 0, 0.1); border-radius: 20px; align-items: center; justify-content: center; color: rgba(255, 215, 0, 0.4); font-size: 11px; writing-mode: vertical-rl; background: rgba(255, 215, 0, 0.03);">SMART REMOVAL</div>
         </div>
 
         <button type="submit" class="remove-btn">🪄 Remove Background</button>
-
-        <div class="trust-bar">
-            <div>🛡️ 100% Secure</div>
-            <div style="color:gold;">|</div>
-            <div>🔒 Privacy Protected</div>
-            <div style="color:gold;">|</div>
-            <div>🏅 AI Powered</div>
-        </div>
     </form>
 
     <div class="footer-container">
