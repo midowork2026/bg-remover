@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HAMOUZI - AI Background Remover</title>
+    
+    <title>HAMOUZI | Free AI Background Remover Online</title>
+    <meta name="description" content="Remove image backgrounds instantly with HAMOUZI AI. Fast, free, and high-quality background removal tool.">
+    <meta name="keywords" content="remove background, bg remover, AI image editor, transparent background, HAMOUZI">
+    <meta name="author" content="HAMOUZI">
+    <link rel="canonical" href="https://yourdomain.com/" />
+
     <style>
         /* 1. التعديلات الأساسية والخلفية المتحركة */
         body {
@@ -99,6 +105,7 @@
             margin: 0;
             transition: 0.3s;
             cursor: pointer;
+            text-decoration: none;
         }
         .logo:hover { text-shadow: 0 0 45px gold; transform: scale(1.02); }
 
@@ -128,6 +135,13 @@
             border-radius: 50%; display: flex; align-items: center;
             justify-content: center; font-weight: bold; box-shadow: 0 0 20px gold; font-size: 20px;
         }
+
+        .login-btn {
+            padding: 10px 25px; border-radius: 12px; border: 1px solid gold;
+            background: transparent; color: gold; text-decoration: none;
+            transition: 0.3s; font-weight: bold;
+        }
+        .login-btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; }
 
         /* 3. المحتوى والبوكسات */
         .wrapper {
@@ -186,7 +200,6 @@
         }
         @media (min-width: 1024px) { .tools-container { display: flex; flex-direction: column; } }
 
-        /* ستايل الأزرار الموحد */
         .tool-btn, .download-btn {
             width: 140px; padding: 12px; border-radius: 15px; border: 1px solid gold;
             background: transparent; color: gold; cursor: pointer; font-weight: bold; transition: 0.3s;
@@ -194,7 +207,6 @@
         }
         .tool-btn:hover, .download-btn:hover { background: gold; color: #000; box-shadow: 0 0 25px gold; transform: scale(1.1); }
 
-        /* منطقة الأزرار السفلية */
         .actions-section {
             margin: 50px auto;
             display: flex;
@@ -241,7 +253,7 @@
             <div class="control-btn" title="Settings">⚙️</div>
         </div>
         <div class="logo-section">
-            <h1 class="logo">HAMOUZI</h1>
+            <a href="/" class="logo">HAMOUZI</a>
             <div class="logo-line"></div>
         </div>
         <div class="auth-section">
@@ -267,10 +279,10 @@
                 <div id="loader" style="display:none; color:gold; font-weight:bold; margin-top:15px;">Processing...</div>
             </div>
             <div class="tools-container">
-                <button type="button" class="tool-btn">Crop Image</button>
-                <button type="button" class="tool-btn">Compress</button>
-                <button type="button" class="tool-btn">Convert</button>
-                <button type="button" class="tool-btn">Merge</button>
+                <a href="/crop"><button type="button" class="tool-btn">Crop Image</button></a>
+                <a href="/compress"><button type="button" class="tool-btn">Compress</button></a>
+                <a href="/convert"><button type="button" class="tool-btn">Convert</button></a>
+                <a href="/merge"><button type="button" class="tool-btn">Merge</button></a>
             </div>
             <div class="box">
                 {% if result_image %}
@@ -287,7 +299,6 @@
             {% if result_image %}
                 <a href="data:image/png;base64,{{ result_image }}" download="hamouzi_result.png" class="download-btn">⬇️ Download Image</a>
             {% endif %}
-            
             <button type="submit" class="remove-btn">🪄 Remove Background</button>
         </div>
 
