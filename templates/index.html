@@ -9,11 +9,28 @@ body{
     margin:0;
     font-family: Arial, sans-serif;
     background-color: #000;
+    /* 🔥 BACKGROUND GLOW - التوهج اللي في نص الخلفية */
     background-image: radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
     background-attachment: fixed;
     color:#fff;
     text-align:center;
     min-height: 100vh;
+    position: relative;
+}
+
+/* 🏆 FULL PAGE GLOW FRAME - الفريم الذهبي المضيء للصفحة كلها */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid rgba(255, 215, 0, 0.4); 
+    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.3), 
+                0 0 20px rgba(255, 215, 0, 0.3);
+    pointer-events: none; /* عشان ميعطلش الضغط على الزراير */
+    z-index: 9999;
 }
 
 /* 🔥 HEADER */
@@ -59,6 +76,7 @@ body{
     cursor:pointer;
     width: 120px;
 }
+.login-btn:hover { background: gold; color: black; }
 
 /* WRAPPER */
 .wrapper{
@@ -69,6 +87,7 @@ body{
     margin-top:40px;
 }
 
+/* BOXES */
 .box{
     width: 320px;
     height: 460px;
@@ -107,7 +126,9 @@ body{
     background:transparent;
     color:gold;
     cursor:pointer;
+    transition: 0.3s;
 }
+.tool-btn:hover { background: gold; color: black; }
 
 .upload-btn{
     margin-top:15px;
@@ -120,7 +141,7 @@ body{
     display: inline-block;
 }
 
-/* مكان ظهور اسم الملف */
+/* FILE NAME & LOADER */
 #file-name {
     margin-top: 10px;
     font-size: 13px;
@@ -131,9 +152,8 @@ body{
     white-space: nowrap;
 }
 
-/* انيميشن النقاط */
 .loading-container {
-    display: none; /* مخفي في البداية */
+    display: none;
     margin-top: 15px;
     color: gold;
     font-weight: bold;
@@ -164,9 +184,11 @@ body{
     font-size:18px;
     cursor:pointer;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    transition: 0.3s;
 }
+.remove-btn:hover { background: gold; color: black; box-shadow: 0 0 40px gold; }
 
-.footer{ margin-top:30px; padding-bottom: 20px; color:gold; }
+.footer{ margin-top:30px; padding-bottom: 25px; color:gold; }
 .footer a{ color:gold; margin:0 10px; text-decoration: none; }
 </style>
 </head>
@@ -235,7 +257,7 @@ body{
     const loader = document.getElementById('loader');
     const labelText = document.getElementById('label-text');
 
-    // 1. كود إظهار اسم الملف عند الاختيار
+    // إظهار اسم الملف
     fileInput.addEventListener('change', function() {
         if (this.files && this.files.length > 0) {
             fileNameDisplay.textContent = this.files[0].name;
@@ -244,9 +266,8 @@ body{
         }
     });
 
-    // 2. كود إظهار "جارى المعالجة" عند الضغط على الزرار
+    // أنيميشن التحميل عند الرفع
     uploadForm.addEventListener('submit', function() {
-        // إخفاء زرار الاختيار واسم الملف وإظهار اللودينج
         labelText.style.display = 'none';
         fileNameDisplay.style.display = 'none';
         loader.style.display = 'block';
