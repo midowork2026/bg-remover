@@ -181,11 +181,20 @@
 </head>
 <body>
 
-    <div class="header">
+<div class="header">
         <h1 class="logo">HAMOUZI</h1>
         <div class="logo-line"></div>
-        <a href="/login" class="login-btn">Login</a>
-    </div>
+        
+        {% if user_email %}
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+                <div title="{{ user_email }}" style="width: 40px; height: 40px; background: gold; color: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; box-shadow: 0 0 15px gold;">
+                    {{ user_email[0] | upper }}
+                </div>
+                <a href="/logout" style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px;">Logout</a>
+            </div>
+        {% else %}
+            <a href="/login" class="login-btn">Login</a>
+        {% endif %}
 
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="wrapper">
