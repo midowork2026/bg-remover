@@ -7,10 +7,10 @@ from PIL import Image
 
 app = Flask(__name__)
 
-# مفتاح الـ API الخاص بك (يفضل تركه كما هو أو وضعه في Environment Variables في الاستضافة)
+# مفتاح الـ API الخاص بك
 API_KEY = os.environ.get("API_KEY", "T8PX6VMNgTofTAD72S4AZZPx")
 
-# --- 1. مسارات الصفحات الأساسية ---
+# --- 1. مسارات الصفحات الأساسية (الواجهات) ---
 
 @app.route('/')
 def index():
@@ -19,10 +19,24 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        # حالياً، سنعيد المستخدم للرئيسية عند الضغط على دخول
-        # يمكنك لاحقاً ربطها بقاعدة بيانات
+        # عند تسجيل الدخول، نوجه المستخدم للرئيسية
         return redirect(url_for('index'))
     return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        # استلام بيانات التسجيل
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        # تنفيذ طلبك: بعد التسجيل يتم التحويل فوراً للصفحة الرئيسية
+        return redirect(url_for('index'))
+    
+    return render_template('register.html')
+
+# --- 2. مسارات الأدوات الفرعية (Templates) ---
 
 @app.route('/crop')
 def crop_page():
@@ -48,14 +62,14 @@ def privacy():
 def contact():
     return render_template('contact.html')
 
-# --- 2. منطق المعالجة (Back-end Logic) ---
+# --- 3. منطق المعالجة البرمجي (Backend Logic) ---
 
-# مسار إزالة الخلفية
+# مسار أداة إزالة الخلفية
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files.get('file')
     if not file:
-        return render_template('index.html', error="برجاء اختيار صورة أولاً")
+        return render_template('index.html', error="Please choose an image first")
     
     response = requests.post(
         'https://api.remove.bg/v1.0/removebg',
@@ -68,7 +82,7 @@ def upload():
         img_base64 = base64.b64encode(response.content).decode('utf-8')
         return render_template('index.html', result_image=img_base64)
     else:
-        return render_template('index.html', error="حدث خطأ في الاتصال بالسيرفر")
+        return render_template('index.html', error="API Error or Connection failed")
 
 # مسار ضغط الصور
 @app.route('/process_compress', methods=['POST'])
@@ -104,14 +118,14 @@ def process_convert():
         return render_template('convert.html', result_image=img_base64, target_format=target_format.lower())
     return redirect(url_for('convert_page'))
 
-# مسار دمج الصور (تغيير الخلفية)
+# مسار دمج الصور (Background Change)
 @app.route('/process_merge', methods=['POST'])
 def process_merge():
     main_file = request.files.get('person_img')
     bg_file = request.files.get('bg_img')
     
     if not main_file or not bg_file:
-        return render_template('merge.html', error="برجاء رفع الصورة الشخصية وصورة الخلفية")
+        return render_template('merge.html', error="Please upload both person and background images")
 
     response = requests.post(
         'https://api.remove.bg/v1.0/removebg',
@@ -123,10 +137,9 @@ def process_merge():
     if response.status_code == 200:
         img_base64 = base64.b64encode(response.content).decode('utf-8')
         return render_template('merge.html', result_image=img_base64)
-    return render_template('merge.html', error="حدث خطأ أثناء الدمج")
+    return render_template('merge.html', error="Processing Error")
 
-# تشغيل التطبيق
+# تشغيل التطبيق على المنفذ المناسب للاستضافة
 if __name__ == '__main__':
-    # الاستضافة تطلب أحياناً تحديد المنفذ (Port) ديناميكياً
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
