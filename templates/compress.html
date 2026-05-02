@@ -5,26 +5,40 @@
     <title>HAMOUZI - Compress Tool</title>
     <style>
         body { margin: 0; font-family: sans-serif; background: #000; color: gold; text-align: center; min-height: 100vh; position: relative; }
-        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; z-index: 9999; }
         .container { padding: 50px; }
-        input[type="range"] { width: 300px; accent-color: gold; }
-        .btn { padding: 15px 40px; border-radius: 15px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; transition: 0.3s; }
-        .btn:hover { background: gold; color: #000; }
         h1 { font-size: 50px; text-shadow: 0 0 15px gold; }
+        input[type="range"] { width: 300px; accent-color: gold; cursor: pointer; }
+        .btn { padding: 15px 40px; border-radius: 15px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; transition: 0.3s; font-weight: bold; text-decoration: none; display: inline-block; }
+        .btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; }
+        .result-img { max-width: 70%; border-radius: 15px; border: 2px solid gold; margin-top: 20px; }
         .val { font-size: 24px; margin: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Compress Image</h1>
-        <p>قلل حجم الصورة مع الحفاظ على الجودة</p>
-        <div style="margin: 40px;">
-            <input type="file" class="btn" style="margin-bottom: 20px;"><br>
-            <input type="range" min="10" max="100" value="80" oninput="document.getElementById('v').innerText = this.value + '%'">
-            <div class="val">Quality: <span id="v">80%</span></div>
+        <p>قلل حجم الصورة مع التحكم في الجودة</p>
+        
+        <form action="/process_compress" method="POST" enctype="multipart/form-data">
+            <div style="margin: 40px;">
+                <input type="file" name="file" class="btn" required style="margin-bottom: 20px;"><br>
+                <input type="range" name="quality" min="10" max="100" value="80" oninput="document.getElementById('v').innerText = this.value + '%'">
+                <div class="val">الجودة المطلوبة: <span id="v">80%</span></div>
+            </div>
+            <button type="submit" class="btn">اضغط الصورة الآن</button>
+        </form>
+
+        {% if result_image %}
+        <div style="margin-top: 40px;">
+            <h2 style="color: #fff;">النتيجة:</h2>
+            <img class="result-img" src="data:image/jpeg;base64,{{ result_image }}">
+            <br><br>
+            <a href="data:image/jpeg;base64,{{ result_image }}" download="compressed_hamouzi.jpg" class="btn">تحميل الصورة المضغوطة</a>
         </div>
-        <button class="btn">Compress Now</button>
-        <a href="/" style="color:#fff; display:block; margin-top:20px; text-decoration:none;">← Back to Home</a>
+        {% endif %}
+
+        <a href="/" style="color:#fff; display:block; margin-top:30px; text-decoration:none; opacity: 0.6;">← العودة للرئيسية</a>
     </div>
 </body>
 </html>
