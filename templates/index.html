@@ -18,59 +18,71 @@
             overflow-x: hidden;
         }
 
-        /* --- تأثير مطر الشهب الغزير (Meteors Shower) --- */
-        @keyframes meteor {
+        /* --- تأثير مطر النقط الذهبية المائلة (Golden Dot Rain) --- */
+        @keyframes dotRain {
             0% { 
-                transform: rotate(-40deg) translateX(0) translateY(0); 
-                opacity: 0; 
+                /* بداية من فوق الشاشة مع ميل */
+                transform: translate(50px, -100px); 
+                opacity: 0;
             }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
+            10% { opacity: 0.7; } /* بتظهر بوضوح */
+            90% { opacity: 0.7; }
             100% { 
-                transform: rotate(-40deg) translateX(-1500px) translateY(1200px); 
-                opacity: 0; 
+                /* نهاية تحت الشاشة مع ميل لليسار */
+                transform: translate(-150px, 100vh); 
+                opacity: 0;
             }
         }
 
-        .meteor-shower {
+        /* حاوية النقط */
+        .dot-rain-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -1; /* خلف المحتوى */
             pointer-events: none;
         }
 
-        .meteor {
+        /* تنسيق النقطة الواحدة (الحبة) */
+        .dot {
             position: absolute;
-            width: 1px; /* رفيعة جداً زي المطر */
-            height: 80px; /* أقصر شوية عشان تبان أسرع */
-            background: linear-gradient(to bottom, gold, transparent);
+            width: 2px; /* صغيرة جداً زي النقط */
+            height: 2px;
+            background-color: gold;
+            border-radius: 50%; /* دائرية */
             opacity: 0;
+            box-shadow: 0 0 5px gold; /* لمعة بسيطة */
+            animation: dotRain linear infinite;
         }
 
-        /* توليد 20 شهاب بمسارات وتوقيتات عشوائية */
-        .meteor:nth-child(1)  { top: -10%; left: 10%;  animation: meteor 4s linear infinite; animation-delay: 0s; }
-        .meteor:nth-child(2)  { top: -10%; left: 20%;  animation: meteor 6s linear infinite; animation-delay: 1s; }
-        .meteor:nth-child(3)  { top: -10%; left: 30%;  animation: meteor 5s linear infinite; animation-delay: 2s; }
-        .meteor:nth-child(4)  { top: -10%; left: 40%;  animation: meteor 7s linear infinite; animation-delay: 0.5s; }
-        .meteor:nth-child(5)  { top: -10%; left: 50%;  animation: meteor 4s linear infinite; animation-delay: 3s; }
-        .meteor:nth-child(6)  { top: -10%; left: 60%;  animation: meteor 6s linear infinite; animation-delay: 1.5s; }
-        .meteor:nth-child(7)  { top: -10%; left: 70%;  animation: meteor 5s linear infinite; animation-delay: 2.5s; }
-        .meteor:nth-child(8)  { top: -10%; left: 80%;  animation: meteor 7s linear infinite; animation-delay: 4s; }
-        .meteor:nth-child(9)  { top: -10%; left: 90%;  animation: meteor 4s linear infinite; animation-delay: 0.2s; }
-        .meteor:nth-child(10) { top: -10%; left: 95%;  animation: meteor 6s linear infinite; animation-delay: 3.5s; }
-        .meteor:nth-child(11) { top: 0%;   left: 15%;  animation: meteor 5s linear infinite; animation-delay: 5s; }
-        .meteor:nth-child(12) { top: 10%;  left: 25%;  animation: meteor 7s linear infinite; animation-delay: 1s; }
-        .meteor:nth-child(13) { top: 20%;  left: 35%;  animation: meteor 4s linear infinite; animation-delay: 2.2s; }
-        .meteor:nth-child(14) { top: 30%;  left: 45%;  animation: meteor 6s linear infinite; animation-delay: 0.8s; }
-        .meteor:nth-child(15) { top: 40%;  left: 55%;  animation: meteor 5s linear infinite; animation-delay: 3.1s; }
-        .meteor:nth-child(16) { top: 50%;  left: 65%;  animation: meteor 7s linear infinite; animation-delay: 1.9s; }
-        .meteor:nth-child(17) { top: 60%;  left: 75%;  animation: meteor 4s linear infinite; animation-delay: 4.5s; }
-        .meteor:nth-child(18) { top: 70%;  left: 85%;  animation: meteor 6s linear infinite; animation-delay: 0s; }
-        .meteor:nth-child(19) { top: 80%;  left: 92%;  animation: meteor 5s linear infinite; animation-delay: 2.7s; }
-        .meteor:nth-child(20) { top: 90%;  left: 100%; animation: meteor 7s linear infinite; animation-delay: 5.5s; }
+        /* توليد 25 نقطة بتوزيع أولي سريع */
+        .dot:nth-child(1)  { top: -10%; left: 10%;  animation-duration: 8s;  animation-delay: 0s; }
+        .dot:nth-child(2)  { top: -10%; left: 20%;  animation-duration: 11s; animation-delay: 1s; }
+        .dot:nth-child(3)  { top: -10%; left: 30%;  animation-duration: 9s;  animation-delay: 2s; }
+        .dot:nth-child(4)  { top: -10%; left: 40%;  animation-duration: 13s; animation-delay: 0.5s; }
+        .dot:nth-child(5)  { top: -10%; left: 50%;  animation-duration: 10s; animation-delay: 3s; }
+        .dot:nth-child(6)  { top: -10%; left: 60%;  animation-duration: 12s; animation-delay: 1.5s; }
+        .dot:nth-child(7)  { top: -10%; left: 70%;  animation-duration: 11s; animation-delay: 2.5s; }
+        .dot:nth-child(8)  { top: -10%; left: 80%;  animation-duration: 14s; animation-delay: 4s; }
+        .dot:nth-child(9)  { top: -10%; left: 90%;  animation-duration: 10s; animation-delay: 0.2s; }
+        .dot:nth-child(10) { top: -10%; left: 95%;  animation-duration: 12s; animation-delay: 3.5s; }
+        .dot:nth-child(11) { top: -5%;  left: 15%;  animation-duration: 11s; animation-delay: 5s; }
+        .dot:nth-child(12) { top: 10%;  left: 25%;  animation-duration: 13s; animation-delay: 1s; }
+        .dot:nth-child(13) { top: 20%;  left: 35%;  animation-duration: 9s;  animation-delay: 2.2s; }
+        .dot:nth-child(14) { top: 30%;  left: 45%;  animation-duration: 12s; animation-delay: 0.8s; }
+        .dot:nth-child(15) { top: 40%;  left: 55%;  animation-duration: 10s; animation-delay: 3.1s; }
+        .dot:nth-child(16) { top: 50%;  left: 65%;  animation-duration: 13s; animation-delay: 1.9s; }
+        .dot:nth-child(17) { top: 60%;  left: 75%;  animation-duration: 11s; animation-delay: 4.5s; }
+        .dot:nth-child(18) { top: 70%;  left: 85%;  animation-duration: 12s; animation-delay: 0s; }
+        .dot:nth-child(19) { top: 80%;  left: 92%;  animation-duration: 10s; animation-delay: 2.7s; }
+        .dot:nth-child(20) { top: 90%;  left: 100%; animation-duration: 13s; animation-delay: 5.5s; }
+        .dot:nth-child(21) { top: -10%; left: 18%;  animation-duration: 10s; animation-delay: 0s; }
+        .dot:nth-child(22) { top: -10%; left: 38%;  animation-duration: 12s; animation-delay: 2s; }
+        .dot:nth-child(23) { top: -10%; left: 58%;  animation-duration: 11s; animation-delay: 4s; }
+        .dot:nth-child(24) { top: -10%; left: 78%;  animation-duration: 13s; animation-delay: 1s; }
+        .dot:nth-child(25) { top: -10%; left: 98%;  animation-duration: 10s; animation-delay: 3s; }
 
         /* البرواز الذهبي */
         body::after {
@@ -230,11 +242,12 @@
     </style>
 </head>
 <body>
-    <div class="meteor-shower">
-        <div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div>
-        <div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div>
-        <div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div>
-        <div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div>
+    <div class="dot-rain-container">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
     </div>
 
     <div class="header">
