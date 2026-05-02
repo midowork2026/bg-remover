@@ -9,7 +9,6 @@ body{
     margin:0;
     font-family: Arial, sans-serif;
     background-color: #000;
-    /* 🔥 BACKGROUND GLOW - التوهج اللي في نص الخلفية */
     background-image: radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
     background-attachment: fixed;
     color:#fff;
@@ -18,18 +17,14 @@ body{
     position: relative;
 }
 
-/* 🏆 FULL PAGE GLOW FRAME - الفريم الذهبي المضيء للصفحة كلها */
+/* 🏆 FULL PAGE FRAME */
 body::after {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     border: 3px solid rgba(255, 215, 0, 0.4); 
-    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.3), 
-                0 0 20px rgba(255, 215, 0, 0.3);
-    pointer-events: none; /* عشان ميعطلش الضغط على الزراير */
+    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.3);
+    pointer-events: none;
     z-index: 9999;
 }
 
@@ -76,7 +71,6 @@ body::after {
     cursor:pointer;
     width: 120px;
 }
-.login-btn:hover { background: gold; color: black; }
 
 /* WRAPPER */
 .wrapper{
@@ -87,7 +81,6 @@ body::after {
     margin-top:40px;
 }
 
-/* BOXES */
 .box{
     width: 320px;
     height: 460px;
@@ -105,17 +98,6 @@ body::after {
 
 .upload-box{ border-style: dashed; }
 
-.ad{
-    width:120px;
-    height:420px;
-    border-radius:20px;
-    border:1px solid rgba(255,215,0,0.15);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:gold;
-}
-
 .tools{ display:flex; flex-direction:column; gap:15px; }
 
 .tool-btn{
@@ -130,64 +112,49 @@ body::after {
 }
 .tool-btn:hover { background: gold; color: black; }
 
-.upload-btn{
-    margin-top:15px;
-    padding:12px 25px;
-    border-radius:15px;
-    border:1px solid gold;
-    background:transparent;
-    color:gold;
-    cursor:pointer;
-    display: inline-block;
+/* 🚀 MODAL (Pop-up) STYLES */
+.modal {
+    display: none; /* مخفي في البداية */
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9); /* خلفية سوداء شفافة */
+    backdrop-filter: blur(8px);
 }
 
-/* FILE NAME & LOADER */
-#file-name {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #ccc;
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.loading-container {
-    display: none;
-    margin-top: 15px;
+.modal-content {
+    background: #111;
+    margin: 10% auto;
+    padding: 30px;
+    border: 2px solid gold;
+    width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 0 50px gold;
     color: gold;
-    font-weight: bold;
+    position: relative;
 }
 
-.dots:after {
-    content: '.';
-    animation: dots 1.5s steps(5, end) infinite;
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #fff;
 }
 
-@keyframes dots {
-    0%, 20% { content: '.'; }
-    40% { content: '..'; }
-    60% { content: '...'; }
-    80%, 100% { content: ''; }
-}
-
+/* REST OF THE STYLE */
+#file-name { margin-top: 10px; font-size: 13px; color: #ccc; }
+.loading-container { display: none; margin-top: 15px; color: gold; font-weight: bold; }
+.dots:after { content: '.'; animation: dots 1.5s steps(5, end) infinite; }
+@keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60% { content: '...'; } 80%, 100% { content: ''; } }
 .preview{ background: transparent; }
 .result-img{ width:100%; height:100%; object-fit: contain; }
-
-.remove-btn{
-    margin-top:30px;
-    padding:15px 60px;
-    border-radius:20px;
-    border:1px solid gold;
-    background:transparent;
-    color:gold;
-    font-size:18px;
-    cursor:pointer;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    transition: 0.3s;
-}
+.remove-btn{ margin-top:30px; padding:15px 60px; border-radius:20px; border:1px solid gold; background:transparent; color:gold; font-size:18px; cursor:pointer; }
 .remove-btn:hover { background: gold; color: black; box-shadow: 0 0 40px gold; }
-
 .footer{ margin-top:30px; padding-bottom: 25px; color:gold; }
 .footer a{ color:gold; margin:0 10px; text-decoration: none; }
 </style>
@@ -205,68 +172,91 @@ body::after {
 </div>
     
 <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+    <div class="wrapper">
+        <div class="ad" style="width:120px; border:1px solid rgba(255,215,0,0.15); border-radius:20px; height:420px; display:flex; align-items:center; justify-content:center; color:gold;">AD SPACE</div>
 
-<div class="wrapper">
-    <div class="ad">AD SPACE</div>
-
-    <div class="box upload-box">
-        <h3>Upload Image</h3>
-        <input type="file" name="file" id="fileInput" hidden required>
-        
-        <label for="fileInput" class="upload-btn" id="label-text">
-            Choose Image
-        </label>
-        
-        <div id="file-name">No file chosen</div>
-
-        <div class="loading-container" id="loader">
-            جارى المعالجة<span class="dots"></span>
+        <div class="box upload-box">
+            <h3>Upload Image</h3>
+            <input type="file" name="file" id="fileInput" hidden required>
+            <label for="fileInput" style="margin-top:15px; padding:12px 25px; border-radius:15px; border:1px solid gold; background:transparent; color:gold; cursor:pointer; display:inline-block;" id="label-text">
+                Choose Image
+            </label>
+            <div id="file-name">No file chosen</div>
+            <div class="loading-container" id="loader">جارى المعالجة<span class="dots"></span></div>
         </div>
-    </div>
 
-    <div class="tools">
-        <button type="button" class="tool-btn">Crop</button>
-        <button type="button" class="tool-btn">Compress</button>
-        <button type="button" class="tool-btn">Convert</button>
-    </div>
+        <div class="tools">
+            <button type="button" class="tool-btn" onclick="openModal('cropModal')">Crop</button>
+            <button type="button" class="tool-btn" onclick="openModal('compressModal')">Compress</button>
+            <button type="button" class="tool-btn" onclick="openModal('convertModal')">Convert</button>
+        </div>
 
-    <div class="box preview">
-        {% if result_image %}
-            <img class="result-img" src="data:image/png;base64,{{ result_image }}">
-        {% else %}
-            <h3>Preview</h3>
-            <p style="font-size: 14px; opacity: 0.7;">Your image will appear here</p>
-        {% endif %}
-    </div>
+        <div class="box preview">
+            {% if result_image %}
+                <img class="result-img" src="data:image/png;base64,{{ result_image }}">
+            {% else %}
+                <h3>Preview</h3>
+                <p style="font-size: 14px; opacity: 0.7;">Your image will appear here</p>
+            {% endif %}
+        </div>
 
-    <div class="ad">AD SPACE</div>
+        <div class="ad" style="width:120px; border:1px solid rgba(255,215,0,0.15); border-radius:20px; height:420px; display:flex; align-items:center; justify-content:center; color:gold;">AD SPACE</div>
+    </div>
+    <button type="submit" class="remove-btn">Remove Background</button>
+</form>
+
+<div id="cropModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('cropModal')">&times;</span>
+        <h2>Crop Tool</h2>
+        <p>ادوات القص ستظهر هنا قريباً...</p>
+    </div>
 </div>
 
-<button type="submit" class="remove-btn" id="submitBtn">Remove Background</button>
+<div id="compressModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('compressModal')">&times;</span>
+        <h2>Compress Tool</h2>
+        <p>ادوات ضغط الصورة ستظهر هنا قريباً...</p>
+    </div>
+</div>
 
-</form>
+<div id="convertModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('convertModal')">&times;</span>
+        <h2>Convert Tool</h2>
+        <p>اختر الصيغة التي تريد التحويل اليها...</p>
+    </div>
+</div>
 
 <div class="footer">
     <a href="/privacy">Privacy Policy</a> | <a href="/contact">Contact Us</a>
 </div>
 
 <script>
+    // فتح واغلاق البوب اب
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+
+    // اغلاق عند الضغط خارج الشباك
+    window.onclick = function(event) {
+        if (event.target.className === 'modal') {
+            event.target.style.display = "none";
+        }
+    }
+
     const fileInput = document.getElementById('fileInput');
     const fileNameDisplay = document.getElementById('file-name');
     const uploadForm = document.getElementById('uploadForm');
     const loader = document.getElementById('loader');
     const labelText = document.getElementById('label-text');
 
-    // إظهار اسم الملف
     fileInput.addEventListener('change', function() {
         if (this.files && this.files.length > 0) {
             fileNameDisplay.textContent = this.files[0].name;
-        } else {
-            fileNameDisplay.textContent = "No file chosen";
         }
     });
 
-    // أنيميشن التحميل عند الرفع
     uploadForm.addEventListener('submit', function() {
         labelText.style.display = 'none';
         fileNameDisplay.style.display = 'none';
