@@ -206,7 +206,7 @@
 </head>
 <body>
 
-    <div class="header">
+<div class="header">
         <div class="logo-section">
             <h1 class="logo">HAMOUZI</h1>
             <div class="logo-line"></div>
@@ -215,7 +215,9 @@
         <div class="auth-section">
             {% if user_email %}
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                    <div class="user-circle" title="{{ user_email }}">{{ user_email[0] | upper }}</div>
+                    <div class="user-circle" title="{{ user_email }}" style="cursor: pointer;">
+                        {{ user_email[0] | upper }}
+                    </div>
                     <a href="/logout" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 11px;">Logout</a>
                 </div>
             {% else %}
@@ -223,7 +225,6 @@
             {% endif %}
         </div>
     </div>
-
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="wrapper">
             <div class="ad-space">ADVERTISING SPACE</div>
