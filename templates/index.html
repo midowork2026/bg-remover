@@ -7,20 +7,14 @@
 <style>
 body{
     margin:0;
-    font-family:Arial;
-    background:#000;
+    font-family: Arial, sans-serif;
+    background-color: #000; /* خلفية سودة تماماً */
+    /* 🔥 BACKGROUND GLOW - التوهج اللي في نص الخلفية */
+    background-image: radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+    background-attachment: fixed;
     color:#fff;
     text-align:center;
-}
-
-/* 🔥 BACKGROUND GLOW */
-body::before{
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:radial-gradient(circle at center, rgba(255,215,0,0.15), transparent 70%);
-    z-index:-1;
+    min-height: 100vh;
 }
 
 /* 🔥 HEADER */
@@ -31,14 +25,13 @@ body::before{
     padding:20px 40px;
 }
 
-/* LOGO - تم تكبير الخط هنا */
-/* الحاوية الجديدة عشان نضمن التوسط */
+/* LOGO CONTAINER - لضمان التوسط المثالي */
 .logo-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* بيخلي كل اللي جواه في النص بالظبط */
+    align-items: center; 
     justify-content: center;
-    flex-grow: 1; /* عشان ياخد المساحة اللي في النص بين الفراغ والزرار */
+    flex-grow: 1;
 }
 
 .logo {
@@ -46,15 +39,19 @@ body::before{
     color: gold;
     font-weight: bold;
     text-shadow: 0 0 25px gold;
-    line-height: 1; /* بيشيل المسافات الزيادة فوق وتحت الكلمة */
+    line-height: 1;
+    margin: 0;
 }
 
 .logo-line {
     width: 250px;
     height: 3px;
     background: linear-gradient(to right, transparent, gold, transparent);
-    margin-top: -20px; /* ارفع أو نزل من هنا لحد ما يظبط في نص الكلمة */
+    margin-top: -25px; /* الخط في نص الكلمة بالظبط */
+    position: relative;
+    z-index: 5;
 }
+
 /* LOGIN BUTTON */
 .login-btn{
     padding:10px 20px;
@@ -63,6 +60,7 @@ body::before{
     background:transparent;
     color:gold;
     cursor:pointer;
+    width: 120px; /* نفس عرض الـ div الفاضي للتوازن */
 }
 .login-btn:hover{
     background:gold;
@@ -78,24 +76,28 @@ body::before{
     margin-top:40px;
 }
 
-/* BOX */
+/* 🔥 BOX - الفريم الذهبي المضيء */
 .box{
-    width:320px;
-    height:460px;
-    border-radius:180px;
-    border:2px solid rgba(255,215,0,0.6);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    position:relative;
-    box-shadow:0 0 30px rgba(255,215,0,0.5);
-    overflow: hidden; /* عشان الصورة متطلعش برا الشكل البيضاوي */
+    width: 320px;
+    height: 460px;
+    border-radius: 180px;
+    border: 2px solid rgba(255, 215, 0, 0.8); /* فريم واضح */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* توهج (Glow) مزدوج للفريم */
+    box-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.4), 
+        0 0 45px rgba(255, 215, 0, 0.2); 
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
 }
 
 /* UPLOAD DASH */
 .upload-box{
-    border-style:dashed;
+    border-style: dashed;
 }
 
 /* AD */
@@ -125,7 +127,7 @@ body::before{
     background:transparent;
     color:gold;
     cursor:pointer;
-    box-shadow:0 0 15px rgba(255,215,0,0.5);
+    box-shadow:0 0 15px rgba(255,215,0,0.3);
 }
 .tool-btn:hover{
     background:gold;
@@ -147,17 +149,16 @@ body::before{
     color:black;
 }
 
-/* PREVIEW BG - تم إزالة الخلفية الشطرنجية هنا */
+/* PREVIEW BG - إزالة الشطرنج */
 .preview{
-    background: transparent; /* تم جعلها شفافة لتظهر الصورة فقط */
+    background: transparent; 
 }
 
 /* IMAGE */
 .result-img{
     width:100%;
     height:100%;
-    object-fit:contain; /* خليتها contain عشان الصورة تظهر كاملة بدون قص */
-    border-radius:180px;
+    object-fit: contain; 
 }
 
 /* REMOVE BUTTON */
@@ -170,21 +171,25 @@ body::before{
     color:gold;
     font-size:18px;
     cursor:pointer;
-    box-shadow:0 0 20px gold;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    transition: 0.3s;
 }
 .remove-btn:hover{
     background:gold;
     color:black;
+    box-shadow: 0 0 40px gold;
 }
 
 /* FOOTER */
 .footer{
     margin-top:30px;
+    padding-bottom: 20px;
     color:gold;
 }
 .footer a{
     color:gold;
     margin:0 10px;
+    text-decoration: none;
 }
 </style>
 </head>
@@ -193,7 +198,7 @@ body::before{
 
 <div class="header">
     <div style="width: 120px;"></div> <div class="logo-container">
-        <div class="logo">HAMOUZI</div>
+        <h1 class="logo">HAMOUZI</h1>
         <div class="logo-line"></div>
     </div>
 
@@ -204,36 +209,32 @@ body::before{
 
 <div class="wrapper">
 
-<div class="ad">AD SPACE</div>
+    <div class="ad">AD SPACE</div>
 
-<div class="box upload-box">
-    <h3>Upload Image</h3>
+    <div class="box upload-box">
+        <h3>Upload Image</h3>
+        <input type="file" name="file" id="fileInput" hidden required>
+        <label for="fileInput" class="upload-btn">
+            Upload Image
+        </label>
+    </div>
 
-    <input type="file" name="file" id="fileInput" hidden required>
+    <div class="tools">
+        <button type="button" class="tool-btn">Crop</button>
+        <button type="button" class="tool-btn">Compress</button>
+        <button type="button" class="tool-btn">Convert</button>
+    </div>
 
-    <label for="fileInput" class="upload-btn">
-        Upload Image
-    </label>
-</div>
+    <div class="box preview">
+        {% if result_image %}
+            <img class="result-img" src="data:image/png;base64,{{ result_image }}">
+        {% else %}
+            <h3>Preview</h3>
+            <p style="font-size: 14px; opacity: 0.7;">Your image will appear here</p>
+        {% endif %}
+    </div>
 
-<div class="tools">
-    <button type="button" class="tool-btn">Crop</button>
-    <button type="button" class="tool-btn">Compress</button>
-    <button type="button" class="tool-btn">Convert</button>
-</div>
-
-<div class="box preview">
-
-{% if result_image %}
-<img class="result-img" src="data:image/png;base64,{{ result_image }}">
-{% else %}
-<h3>Preview</h3>
-<p>Your image will appear here</p>
-{% endif %}
-
-</div>
-
-<div class="ad">AD SPACE</div>
+    <div class="ad">AD SPACE</div>
 
 </div>
 
