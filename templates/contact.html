@@ -1,80 +1,42 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>اتصل بنا - HAMOUZI</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>HAMOUZI - Contact Us</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: url("{{ url_for('static', filename='bg.jpg') }}") no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: -1;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 60px auto;
-            padding: 30px;
-            border: 1px solid gold;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        h1 {
-            color: gold;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: none;
-        }
-
-        button {
-            padding: 10px 20px;
-            background: gold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        a {
-            display: block;
-            margin-top: 15px;
-            color: gold;
-            text-decoration: none;
-        }
+        body { margin: 0; font-family: sans-serif; background: #000; color: gold; text-align: center; min-height: 100vh; position: relative; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; z-index: 9999; }
+        .container { padding: 50px; max-width: 600px; margin: 0 auto; }
+        h1 { font-size: 50px; text-shadow: 0 0 15px gold; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        input, textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid gold; background: rgba(255,215,0,0.05); color: #fff; outline: none; box-sizing: border-box; }
+        .btn { padding: 15px 40px; border-radius: 15px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; transition: 0.3s; font-weight: bold; width: 100%; font-size: 18px; }
+        .btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; }
+        a { color: #fff; text-decoration: none; display: block; margin-top: 20px; opacity: 0.6; }
     </style>
 </head>
-
 <body>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>نحن نسعد دائماً بسماع آرائكم واقتراحاتكم</p>
+        
+        <form style="margin-top: 40px;">
+            <div class="input-group">
+                <label>الأسم الكامل</label>
+                <input type="text" placeholder="Your Name">
+            </div>
+            <div class="input-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" placeholder="email@example.com">
+            </div>
+            <div class="input-group">
+                <label>رسالتك</label>
+                <textarea rows="5" placeholder="How can we help you?"></textarea>
+            </div>
+            <button type="button" class="btn" onclick="alert('شكراً لرسالتك! سيتم الرد عليك قريباً.')">إرسال الرسالة</button>
+        </form>
 
-<div class="container">
-    <h1>اتصل بنا</h1>
-
-    <form>
-        <input type="text" placeholder="الاسم" required>
-        <input type="email" placeholder="البريد الإلكتروني" required>
-        <textarea placeholder="اكتب رسالتك..." rows="5"></textarea>
-        <button type="submit">إرسال</button>
-    </form>
-
-    <a href="/">العودة إلى الصفحة الرئيسية</a>
-</div>
-
+        <a href="/">← العودة للرئيسية</a>
+    </div>
 </body>
 </html>
