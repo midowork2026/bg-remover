@@ -24,7 +24,8 @@
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             border: 4px solid rgba(255, 215, 0, 0.4); 
-            box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.3);
+            box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.3), 
+                        0 0 30px rgba(255, 215, 0, 0.3);
             pointer-events: none;
             z-index: 9999;
         }
@@ -106,9 +107,7 @@
             gap: 15px;
         }
 
-        .tool-link {
-            text-decoration: none;
-        }
+        .tool-link { text-decoration: none; }
 
         .tool-btn {
             width: 160px;
@@ -129,7 +128,65 @@
             transform: scale(1.05);
         }
 
-        /* UI ELEMENTS */
+        /* ✨ REMOVE BUTTON (As requested) */
+        .remove-btn {
+            margin-top: 40px;
+            padding: 15px 60px;
+            border-radius: 15px;
+            border: 2px solid gold;
+            background: rgba(255, 215, 0, 0.05);
+            color: gold;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            transition: 0.3s;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .remove-btn:hover { background: gold; color: black; box-shadow: 0 0 40px gold; }
+        .remove-btn::before { content: "🪄"; font-size: 22px; }
+
+        /* ✅ TRUST INDICATORS */
+        .trust-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 25px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        .divider { border-left: 1px solid rgba(255, 215, 0, 0.3); height: 15px; }
+
+        /* 🗺️ FOOTER (Matched with screenshot) */
+        .footer-container {
+            margin-top: 60px;
+            padding: 30px 60px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-link {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .footer-link:hover { color: gold; text-shadow: 0 0 10px gold; }
+        .footer-link span { color: gold; font-size: 18px; }
+
+        .copyright { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
+
         .upload-btn {
             margin-top: 15px;
             padding: 12px 25px;
@@ -140,45 +197,13 @@
             cursor: pointer;
             display: inline-block;
         }
-
-        #file-name { margin-top: 10px; font-size: 13px; color: #ccc; max-width: 250px; overflow: hidden; }
+        #file-name { margin-top: 10px; font-size: 13px; color: #ccc; }
         .loading-container { display: none; margin-top: 15px; color: gold; font-weight: bold; }
         .dots:after { content: '.'; animation: dots 1.5s steps(5, end) infinite; }
         @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60% { content: '...'; } 80%, 100% { content: ''; } }
         
         .result-img { width: 85%; height: auto; border-radius: 20px; }
-
-        .remove-btn {
-            margin-top: 30px;
-            padding: 15px 60px;
-            border-radius: 20px;
-            border: 1px solid gold;
-            background: transparent;
-            color: gold;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-            transition: 0.3s;
-            font-weight: bold;
-        }
-        .remove-btn:hover { background: gold; color: black; box-shadow: 0 0 40px gold; }
-
-        .footer { margin-top: 50px; padding-bottom: 40px; color: gold; }
-        .footer a { color: gold; margin: 0 15px; text-decoration: none; opacity: 0.7; transition: 0.3s; }
-        .footer a:hover { opacity: 1; text-decoration: underline; }
-
-        .ad-space {
-            width: 120px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            border-radius: 20px;
-            height: 420px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 215, 0, 0.2);
-            font-size: 12px;
-            writing-mode: vertical-rl;
-        }
+        .ad-space { width: 120px; border: 1px solid rgba(255, 215, 0, 0.1); border-radius: 20px; height: 420px; display: flex; align-items: center; justify-content: center; color: rgba(255, 215, 0, 0.1); font-size: 10px; writing-mode: vertical-rl; }
     </style>
 </head>
 <body>
@@ -224,31 +249,25 @@
         </div>
 
         <button type="submit" class="remove-btn">Remove Background</button>
+
+        <div class="trust-box">
+            <div><span>🛡️</span> 100% Secure</div>
+            <div class="divider"></div>
+            <div><span>🔒</span> No data is stored</div>
+            <div class="divider"></div>
+            <div><span>🏅</span> High Quality</div>
+        </div>
     </form>
 
-    <div class="footer">
-        <a href="/privacy">Privacy Policy</a> | 
-        <a href="/contact">Contact Us</a>
+    <div class="footer-container">
+        <a href="/privacy" class="footer-link"><span>🛡️</span> Privacy Policy</a>
+        
+        <div class="copyright">© 2026 HAMOUZI. All rights reserved.</div>
+        
+        <a href="/contact" class="footer-link"><span>📞</span> Contact Us</a>
     </div>
 
     <script>
         const fileInput = document.getElementById('fileInput');
         const fileNameDisplay = document.getElementById('file-name');
-        const uploadForm = document.getElementById('uploadForm');
-        const loader = document.getElementById('loader');
-        const labelText = document.getElementById('label-text');
-
-        fileInput.addEventListener('change', function() {
-            if (this.files && this.files.length > 0) {
-                fileNameDisplay.textContent = this.files[0].name;
-            }
-        });
-
-        uploadForm.addEventListener('submit', function() {
-            labelText.style.display = 'none';
-            fileNameDisplay.style.display = 'none';
-            loader.style.display = 'block';
-        });
-    </script>
-</body>
-</html>
+        const upload
