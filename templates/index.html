@@ -54,7 +54,6 @@
             padding: 20px 40px;
         }
 
-        /* الأزرار الأربعة في اليسار */
         .controls-section {
             grid-column: 1;
             display: flex;
@@ -103,11 +102,6 @@
         }
         .logo:hover { text-shadow: 0 0 45px gold; transform: scale(1.02); }
 
-        @keyframes shine {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
         .logo-line {
             width: clamp(150px, 50vw, 280px);
             height: 4px;
@@ -116,6 +110,11 @@
             margin-top: 5px;
             box-shadow: 0 0 15px gold;
             animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .auth-section {
@@ -129,13 +128,6 @@
             border-radius: 50%; display: flex; align-items: center;
             justify-content: center; font-weight: bold; box-shadow: 0 0 20px gold; font-size: 20px;
         }
-
-        .login-btn {
-            padding: 10px 25px; border-radius: 12px; border: 1px solid gold;
-            background: transparent; color: gold; text-decoration: none;
-            transition: 0.3s; font-weight: bold;
-        }
-        .login-btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; }
 
         /* 3. المحتوى والبوكسات */
         .wrapper {
@@ -152,20 +144,15 @@
         }
 
         .ad-space {
-            display: none;
+            display: flex; width: 120px; height: 500px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 20px; align-items: center; justify-content: center;
+            color: rgba(255, 215, 0, 0.4); font-size: 11px; writing-mode: vertical-rl;
+            background: rgba(255, 215, 0, 0.03);
+            transition: 0.3s;
         }
-
-        @media (min-width: 1200px) {
-            .ad-space {
-                display: flex; width: 120px; height: 500px;
-                border: 1px solid rgba(255, 215, 0, 0.1);
-                border-radius: 20px; align-items: center; justify-content: center;
-                color: rgba(255, 215, 0, 0.4); font-size: 11px; writing-mode: vertical-rl;
-                background: rgba(255, 215, 0, 0.03);
-                transition: 0.3s;
-            }
-            .ad-space:hover { border-color: gold; color: gold; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
-        }
+        @media (max-width: 1199px) { .ad-space { display: none; } }
+        .ad-space:hover { border-color: gold; color: gold; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
 
         .box {
             width: 100%;
@@ -180,16 +167,15 @@
             background: rgba(255, 255, 255, 0.03);
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
             transition: 0.4s;
-            overflow: hidden; /* ضروري لقص الصورة لتأخذ شكل البرواز */
+            overflow: hidden;
             position: relative;
         }
         .box:hover { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); border-color: #fff; transform: translateY(-5px); }
 
-        /* تنسيق الصورة الناتجة داخل البرواز */
         .result-img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* تجعل الصورة تملأ البرواز البيضاوي */
+            object-fit: cover;
             filter: drop-shadow(0 0 15px gold);
         }
 
@@ -200,14 +186,25 @@
         }
         @media (min-width: 1024px) { .tools-container { display: flex; flex-direction: column; } }
 
-        .tool-btn {
+        /* ستايل الأزرار الموحد */
+        .tool-btn, .download-btn {
             width: 140px; padding: 12px; border-radius: 15px; border: 1px solid gold;
             background: transparent; color: gold; cursor: pointer; font-weight: bold; transition: 0.3s;
+            text-decoration: none; display: inline-block;
         }
-        .tool-btn:hover { background: gold; color: #000; box-shadow: 0 0 25px gold; transform: scale(1.1); }
+        .tool-btn:hover, .download-btn:hover { background: gold; color: #000; box-shadow: 0 0 25px gold; transform: scale(1.1); }
+
+        /* منطقة الأزرار السفلية */
+        .actions-section {
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
 
         .remove-btn {
-            margin: 50px auto; width: 90%; max-width: 450px; padding: 18px;
+            width: 90%; max-width: 450px; padding: 18px;
             border-radius: 15px; border: 2px solid gold; background: rgba(255, 215, 0, 0.1);
             color: gold; font-size: 22px; font-weight: bold; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 15px; transition: 0.3s;
@@ -243,16 +240,14 @@
             <div class="control-btn" title="Dark/Light Mode">🌓</div>
             <div class="control-btn" title="Settings">⚙️</div>
         </div>
-
         <div class="logo-section">
             <h1 class="logo">HAMOUZI</h1>
             <div class="logo-line"></div>
         </div>
-
         <div class="auth-section">
             {% if user_email %}
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                    <div class="user-circle" title="{{ user_email }}">{{ user_email[0] | upper }}</div>
+                    <div class="user-circle">{{ user_email[0] | upper }}</div>
                     <a href="/logout" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 11px;">Logout</a>
                 </div>
             {% else %}
@@ -263,11 +258,7 @@
 
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="wrapper">
-            <div class="ad-space" style="flex-direction: column;">
-                <img src="https://img.icons8.com/isometric-folders/100/null/brain.png" style="width: 45px; opacity:0.5; margin-bottom: 15px;">
-                AI PROCESSOR
-            </div>
-
+            <div class="ad-space">AI PROCESSOR</div>
             <div class="box">
                 <h3 style="color:gold; text-shadow: 0 0 10px gold;">Upload Image</h3>
                 <input type="file" name="file" id="fileInput" hidden required>
@@ -275,14 +266,12 @@
                 <div id="file-name" style="margin-top:15px; color:gold; font-size:12px;">No file chosen</div>
                 <div id="loader" style="display:none; color:gold; font-weight:bold; margin-top:15px;">Processing...</div>
             </div>
-
             <div class="tools-container">
-                <a href="/crop"><button type="button" class="tool-btn">Crop Image</button></a>
-                <a href="/compress"><button type="button" class="tool-btn">Compress</button></a>
-                <a href="/convert"><button type="button" class="tool-btn">Convert</button></a>
-                <a href="/merge"><button type="button" class="tool-btn">Merge</button></a>
+                <button type="button" class="tool-btn">Crop Image</button>
+                <button type="button" class="tool-btn">Compress</button>
+                <button type="button" class="tool-btn">Convert</button>
+                <button type="button" class="tool-btn">Merge</button>
             </div>
-
             <div class="box">
                 {% if result_image %}
                     <img src="data:image/png;base64,{{ result_image }}" class="result-img">
@@ -291,14 +280,16 @@
                     <p style="font-size:12px; opacity:0.2;">Result appears here</p>
                 {% endif %}
             </div>
-
-            <div class="ad-space" style="flex-direction: column;">
-                <img src="https://img.icons8.com/isometric-folders/100/null/robot.png" style="width: 45px; opacity:0.5; margin-bottom: 15px;">
-                SMART REMOVAL
-            </div>
+            <div class="ad-space">SMART REMOVAL</div>
         </div>
 
-        <button type="submit" class="remove-btn">🪄 Remove Background</button>
+        <div class="actions-section">
+            {% if result_image %}
+                <a href="data:image/png;base64,{{ result_image }}" download="hamouzi_result.png" class="download-btn">⬇️ Download Image</a>
+            {% endif %}
+            
+            <button type="submit" class="remove-btn">🪄 Remove Background</button>
+        </div>
 
         <div class="trust-bar">
             <div>🛡️ 100% Secure</div>
