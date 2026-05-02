@@ -2,28 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HAMOUZI - Crop Tool</title>
+    <title>HAMOUZI - AI Crop Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <style>
         body { margin: 0; font-family: sans-serif; background: #000; color: gold; text-align: center; min-height: 100vh; position: relative; }
-        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; }
-        .container { padding: 50px; }
-        .box { width: 300px; height: 300px; border: 2px dashed gold; border-radius: 20px; margin: 20px auto; display: flex; align-items: center; justify-content: center; background: rgba(255,215,0,0.05); }
-        .btn { padding: 15px 40px; border-radius: 15px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; transition: 0.3s; font-weight: bold; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; z-index: 9999; }
+        .container { padding: 40px; }
+        .crop-wrapper { max-width: 500px; max-height: 500px; margin: 20px auto; background: #111; border: 1px solid gold; overflow: hidden; }
+        img { max-width: 100%; display: block; }
+        .btn { padding: 12px 35px; border-radius: 12px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; transition: 0.3s; font-weight: bold; margin: 10px; }
         .btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; }
-        h1 { font-size: 50px; text-shadow: 0 0 15px gold; }
-        a { color: #fff; text-decoration: none; display: block; margin-top: 20px; opacity: 0.6; }
+        h1 { font-size: 45px; text-shadow: 0 0 15px gold; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Crop Image</h1>
-        <p>قم بقص صورك باحترافية</p>
-        <div class="box">
-            <input type="file" id="cropInput" hidden>
-            <label for="cropInput" class="btn">Select Image</label>
+        <h1>Crop Tool</h1>
+        <p>حدد الجزء المطلوب قصه من الصورة</p>
+
+        <input type="file" id="upload" class="btn" accept="image/*">
+        
+        <div class="crop-wrapper">
+            <img id="image" src="">
         </div>
-        <button class="btn">Start Cropping</button>
-        <a href="/">← Back to Home</a>
+
+        <button id="cropBtn" class="btn" style="display:none;">قص وحفظ الصورة</button>
+        
+        <div id="result" style="margin-top: 20px;"></div>
+        
+        <a href="/" style="color:#fff; display:block; margin-top:20px; text-decoration:none; opacity: 0.6;">← العودة للرئيسية</a>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script>
+        const image = document.getElementById('image');
+        const upload = document.getElementById('upload');
+        const cropBtn = document.getElementById('cropBtn');
+        const resultDiv = document.getElementById('result');
+        let cropper;
+
+        // عند اختيار ملف
+        upload.addEventListener('change', (e) => {
+            const files = e.target.files;
+            if (files && files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    image.src = event.target.result;
+                    if (cropper) cropper.destroy();
+                    cropper = new Cropper(image, {
+                        aspectRatio: NaN, // حرية في التحديد
+                        viewMode: 1,
+                    });
+                    cropBtn.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(files[0]);
+            }
+        });
+
+        // عند الضغط على زر القص
+        cropBtn.addEventListener('click', () => {
+            const canvas = cropper.getCroppedCanvas();
+            const croppedImageData = canvas.toDataURL('image/png');
+            
+            // عرض النتيجة وزر التحميل
+            resultDiv.innerHTML = `
+                <h2 style="color:white;">النتيجة:</h2>
+                <img src="${croppedImageData}" style="max-width:80%; border:2px solid gold; border-radius:15px;">
+                <br><br>
+                <a href="${croppedImageData}" download="cropped_hamouzi.png" class="btn" style="text-decoration:none; display:inline-block;">تحميل الصورة المقصوصة</a>
+            `;
+        });
+    </script>
 </body>
 </html>
