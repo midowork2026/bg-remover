@@ -19,6 +19,51 @@
             overflow-x: hidden;
         }
 
+        /* --- شريط الأزرار الجانبي الجديد --- */
+        .side-menu {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10000; /* لضمان ظهوره فوق كل شيء */
+        }
+
+        .side-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 1px solid gold;
+            background: rgba(0, 0, 0, 0.6);
+            color: gold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 20px;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .side-btn:hover {
+            background: gold;
+            color: #000;
+            box-shadow: 0 0 25px gold;
+            transform: scale(1.1);
+        }
+
+        /* إخفاء الشريط في الشاشات الصغيرة جداً لتجنب تداخل العناصر أو وضعه في الأسفل */
+        @media (max-width: 600px) {
+            .side-menu {
+                left: 10px;
+                gap: 10px;
+            }
+            .side-btn { width: 40px; height: 40px; font-size: 16px; }
+        }
+
         /* جزيئات الذكاء الاصطناعي المتحركة في الخلفية */
         @keyframes moveParticles {
             0% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
@@ -73,7 +118,6 @@
         }
         .logo:hover { text-shadow: 0 0 45px gold; transform: scale(1.02); }
 
-        /* خط اللوجو اللامع المتحرك */
         @keyframes shine {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
@@ -234,6 +278,13 @@
     </style>
 </head>
 <body>
+
+    <div class="side-menu">
+        <a href="/" class="side-btn" title="Home">🏠</a>
+        <div class="side-btn" title="Change Language">🌐</div>
+        <div class="side-btn" title="Dark/Light Mode">🌓</div>
+        <div class="side-btn" title="Settings">⚙️</div>
+    </div>
 
     <div class="header">
         <div class="logo-section">
