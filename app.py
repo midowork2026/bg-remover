@@ -3,48 +3,63 @@ import requests
 import base64
 import os
 import io
-from PIL import Image # مكتبة معالجة الصور للضغط والتحويل
+from PIL import Image
 
 app = Flask(__name__)
 
+# 🔥 API KEY الخاص بك
 API_KEY = "T8PX6VMNgTofTAD72S4AZZPx"
 
+# 1. الصفحة الرئيسية
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# --- مسارات عرض الصفحات ---
+# 2. صفحة القص (Crop)
 @app.route('/crop')
 def crop_page():
     return render_template('crop.html')
 
+# 3. صفحة الضغط (Compress)
 @app.route('/compress')
 def compress_page():
     return render_template('compress.html')
 
+# 4. صفحة التحويل (Convert)
 @app.route('/convert')
 def convert_page():
     return render_template('convert.html')
 
+# 5. صفحة الدمج (Merge)
 @app.route('/merge')
 def merge_page():
     return render_template('merge.html')
 
-# --- تنفيذ الأوامر (المنطق البرمجي) ---
+# 6. صفحة سياسة الخصوصية (Privacy) - اللي كانت ناقصة
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
 
-# 1. إزالة الخلفية
+# 7. صفحة اتصل بنا (Contact) - اللي كانت ناقصة
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+# --- العمليات البرمجية (Logic) ---
+
+# تنفيذ إزالة الخلفية
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files.get('file')
-    if not file: return "Select Image First"
+    if not file: return render_template('index.html', error="برجاء اختيار صورة")
     response = requests.post('https://api.remove.bg/v1.0/removebg',
         files={'image_file': file}, data={'size': 'auto'}, headers={'X-Api-Key': API_KEY})
     if response.status_code == 200:
         img_base64 = base64.b64encode(response.content).decode('utf-8')
         return render_template('index.html', result_image=img_base64)
-    return "Error in API"
+    return render_template('index.html', error="خطأ في السيرفر")
 
-# 2. تنفيذ الضغط (Compress)
+# تنفيذ الضغط
 @app.route('/process_compress', methods=['POST'])
 def process_compress():
     file = request.files.get('file')
@@ -52,7 +67,6 @@ def process_compress():
     if file:
         img = Image.open(file)
         img_io = io.BytesIO()
-        # تحويل لـ RGB لو كانت PNG عشان نعرف نضغطها JPG
         if img.mode in ("RGBA", "P"): img = img.convert("RGB")
         img.save(img_io, 'JPEG', quality=quality)
         img_io.seek(0)
@@ -60,7 +74,7 @@ def process_compress():
         return render_template('compress.html', result_image=img_base64)
     return "Error"
 
-# 3. تنفيذ التحويل (Convert)
+# تنفيذ التحويل
 @app.route('/process_convert', methods=['POST'])
 def process_convert():
     file = request.files.get('file')
@@ -74,10 +88,10 @@ def process_convert():
         img.save(img_io, target_format)
         img_io.seek(0)
         img_base64 = base64.b64encode(img_io.getvalue()).decode('utf-8')
-        return render_template('convert.html', result_image=img_base64)
+        return render_template('convert.html', result_image=img_base64, target_format=target_format.lower())
     return "Error"
 
-# 4. تنفيذ الدمج (Merge)
+# تنفيذ الدمج
 @app.route('/process_merge', methods=['POST'])
 def process_merge():
     main_file = request.files.get('person_img')
