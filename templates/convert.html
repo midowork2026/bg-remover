@@ -5,25 +5,49 @@
     <title>HAMOUZI - Convert Tool</title>
     <style>
         body { margin: 0; font-family: sans-serif; background: #000; color: gold; text-align: center; min-height: 100vh; position: relative; }
-        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; z-index: 9999; }
         .container { padding: 50px; }
-        .btn { padding: 10px 25px; margin: 5px; border-radius: 10px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; }
-        .btn:hover, .active { background: gold; color: #000; }
         h1 { font-size: 50px; text-shadow: 0 0 15px gold; }
+        .btn { padding: 12px 30px; margin: 10px; border-radius: 12px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; transition: 0.3s; font-weight: bold; text-decoration: none; display: inline-block; }
+        .btn:hover { background: gold; color: #000; }
+        .format-btn { display: none; }
+        .format-label { cursor: pointer; padding: 10px 20px; border: 1px solid gold; border-radius: 10px; margin: 5px; display: inline-block; }
+        .format-btn:checked + .format-label { background: gold; color: black; box-shadow: 0 0 15px gold; }
+        .result-img { max-width: 70%; border-radius: 15px; border: 2px solid gold; margin-top: 20px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Convert Format</h1>
-        <p>حول صورك إلى PNG, JPG, WEBP</p>
-        <input type="file" class="btn" style="display:block; margin: 20px auto;">
-        <div style="margin: 20px;">
-            <button class="btn">PNG</button>
-            <button class="btn">JPG</button>
-            <button class="btn">WEBP</button>
+        <p>حول صورك إلى أي صيغة تريدها</p>
+        
+        <form action="/process_convert" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" class="btn" required style="display:block; margin: 20px auto;">
+            
+            <div style="margin: 30px;">
+                <input type="radio" name="format" value="PNG" id="png" class="format-btn" checked>
+                <label for="png" class="format-label">PNG</label>
+
+                <input type="radio" name="format" value="JPG" id="jpg" class="format-btn">
+                <label for="jpg" class="format-label">JPG</label>
+
+                <input type="radio" name="format" value="WEBP" id="webp" class="format-btn">
+                <label for="webp" class="format-label">WEBP</label>
+            </div>
+
+            <button type="submit" class="btn" style="padding: 15px 60px; font-size: 18px;">تحويل وصيانة</button>
+        </form>
+
+        {% if result_image %}
+        <div style="margin-top: 40px;">
+            <h2 style="color: #fff;">الصورة بعد التحويل:</h2>
+            <img class="result-img" src="data:image/{{ target_format or 'png' }};base64,{{ result_image }}">
+            <br><br>
+            <a href="data:image/{{ target_format or 'png' }};base64,{{ result_image }}" download="converted_hamouzi" class="btn">تحميل الملف الجديد</a>
         </div>
-        <button class="btn" style="padding: 15px 50px; font-weight:bold;">Convert Now</button>
-        <a href="/" style="color:#fff; display:block; margin-top:20px; text-decoration:none;">← Back to Home</a>
+        {% endif %}
+
+        <a href="/" style="color:#fff; display:block; margin-top:30px; text-decoration:none; opacity: 0.6;">← العودة للرئيسية</a>
     </div>
 </body>
 </html>
