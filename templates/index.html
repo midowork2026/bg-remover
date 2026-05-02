@@ -18,17 +18,13 @@
             overflow-x: hidden;
         }
 
-        /* 🏆 FULL PAGE GLOW FRAME - البرواز الذهبي المضيء للصفحة كلها */
+        /* 🏆 FULL PAGE GLOW FRAME */
         body::after {
             content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             border: 4px solid rgba(255, 215, 0, 0.4); 
-            box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.3), 
-                        0 0 30px rgba(255, 215, 0, 0.3);
+            box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.3);
             pointer-events: none;
             z-index: 9999;
         }
@@ -102,7 +98,6 @@
             position: relative;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 45px rgba(255, 215, 0, 0.1); 
             background: rgba(255, 255, 255, 0.02);
-            transition: 0.3s;
         }
 
         .tools {
@@ -134,16 +129,6 @@
             transform: scale(1.05);
         }
 
-        /* تمييز زرار الدمج بلون مختلف قليلاً */
-        .tool-btn.merge {
-            border-color: #00ffcc;
-            color: #00ffcc;
-        }
-        .tool-btn.merge:hover {
-            background: #00ffcc;
-            box-shadow: 0 0 15px #00ffcc;
-        }
-
         /* UI ELEMENTS */
         .upload-btn {
             margin-top: 15px;
@@ -154,9 +139,7 @@
             color: gold;
             cursor: pointer;
             display: inline-block;
-            transition: 0.3s;
         }
-        .upload-btn:hover { background: rgba(255, 215, 0, 0.1); }
 
         #file-name { margin-top: 10px; font-size: 13px; color: #ccc; max-width: 250px; overflow: hidden; }
         .loading-container { display: none; margin-top: 15px; color: gold; font-weight: bold; }
@@ -225,7 +208,7 @@
                 <a href="/crop" class="tool-link"><button type="button" class="tool-btn">Crop Image</button></a>
                 <a href="/compress" class="tool-link"><button type="button" class="tool-btn">Compress Image</button></a>
                 <a href="/convert" class="tool-link"><button type="button" class="tool-btn">Convert Format</button></a>
-                <a href="/merge" class="tool-link"><button type="button" class="tool-btn merge">Merge Images</button></a>
+                <a href="/merge" class="tool-link"><button type="button" class="tool-btn">Merge Images</button></a>
             </div>
 
             <div class="box">
@@ -262,7 +245,6 @@
         });
 
         uploadForm.addEventListener('submit', function() {
-            // إخفاء زر الاختيار وإظهار أنيميشن التحميل عند الضغط على الزر الرئيسي
             labelText.style.display = 'none';
             fileNameDisplay.style.display = 'none';
             loader.style.display = 'block';
