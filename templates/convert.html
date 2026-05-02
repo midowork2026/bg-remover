@@ -1,1 +1,29 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HAMOUZI - Convert Tool</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; background: #000; color: gold; text-align: center; min-height: 100vh; position: relative; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; }
+        .container { padding: 50px; }
+        .btn { padding: 10px 25px; margin: 5px; border-radius: 10px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; }
+        .btn:hover, .active { background: gold; color: #000; }
+        h1 { font-size: 50px; text-shadow: 0 0 15px gold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Convert Format</h1>
+        <p>حول صورك إلى PNG, JPG, WEBP</p>
+        <input type="file" class="btn" style="display:block; margin: 20px auto;">
+        <div style="margin: 20px;">
+            <button class="btn">PNG</button>
+            <button class="btn">JPG</button>
+            <button class="btn">WEBP</button>
+        </div>
+        <button class="btn" style="padding: 15px 50px; font-weight:bold;">Convert Now</button>
+        <a href="/" style="color:#fff; display:block; margin-top:20px; text-decoration:none;">← Back to Home</a>
+    </div>
+</body>
+</html>
