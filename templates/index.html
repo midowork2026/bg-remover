@@ -5,45 +5,215 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HAMOUZI - AI Background Remover</title>
     <style>
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #000; color: #fff; text-align: center; min-height: 100vh; position: relative; overflow-x: hidden; }
-        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.3); pointer-events: none; z-index: 9999; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; }
-        .logo { font-size: 80px; color: gold; font-weight: bold; text-shadow: 0 0 25px gold; margin: 0; }
-        .login-btn { padding: 10px 25px; border-radius: 12px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; text-decoration: none; transition: 0.3s; }
-        .login-btn:hover { background: gold; color: black; }
-        .wrapper { display: flex; justify-content: center; align-items: center; gap: 30px; margin-top: 40px; flex-wrap: wrap; }
-        .box { width: 300px; height: 450px; border-radius: 150px; border: 2px solid gold; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(255, 215, 0, 0.02); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
-        .tool-btn { width: 160px; padding: 12px; border-radius: 15px; border: 1px solid gold; background: transparent; color: gold; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
-        .tool-btn:hover { background: gold; color: black; box-shadow: 0 0 15px gold; }
-        .remove-btn { margin-top: 40px; padding: 15px 60px; border-radius: 15px; border: 2px solid gold; background: rgba(255, 215, 0, 0.05); color: gold; font-size: 20px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 12px; margin-left: auto; margin-right: auto; transition: 0.3s; }
-        .remove-btn:hover { background: gold; color: black; box-shadow: 0 0 40px gold; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            /* الوهج الذهبي في منتصف الصفحة */
+            background-image: radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* البرواز الذهبي المضيء حول الصفحة */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 4px solid rgba(255, 215, 0, 0.4); 
+            box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.3);
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* الهيدر واللوجو */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .logo {
+            font-size: 85px; 
+            color: gold;
+            font-weight: bold;
+            text-shadow: 0 0 25px gold;
+            margin: 0;
+            line-height: 1;
+        }
+
+        /* الخط الذهبي تحت اللوجو */
+        .logo-line {
+            width: 280px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, gold, transparent);
+            margin-top: 5px;
+            box-shadow: 0 0 10px gold;
+        }
+
+        .login-btn {
+            padding: 10px 25px;
+            border-radius: 12px;
+            border: 1px solid gold;
+            background: transparent;
+            color: gold;
+            text-decoration: none;
+            transition: 0.3s;
+            width: 120px;
+        }
+        .login-btn:hover { background: gold; color: black; box-shadow: 0 0 15px gold; }
+
+        /* منطقة المحتوى */
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        /* المساحات الإعلانية */
+        .ad-space {
+            width: 120px;
+            height: 450px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 215, 0, 0.2);
+            font-size: 12px;
+            writing-mode: vertical-rl;
+            background: rgba(255, 215, 0, 0.02);
+        }
+
+        /* الصناديق الدائرية */
+        .box {
+            width: 320px;
+            height: 480px;
+            border-radius: 160px;
+            border: 2px solid gold;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+            position: relative;
+        }
+
+        /* الأزرار */
+        .tool-btn {
+            width: 170px;
+            padding: 12px;
+            border-radius: 15px;
+            border: 1px solid gold;
+            background: transparent;
+            color: gold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .tool-btn:hover { background: gold; color: #000; box-shadow: 0 0 20px gold; transform: scale(1.05); }
+
+        .remove-btn {
+            margin: 40px auto;
+            padding: 15px 60px;
+            border-radius: 15px;
+            border: 2px solid gold;
+            background: rgba(255, 215, 0, 0.1);
+            color: gold;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+        .remove-btn:hover { background: gold; color: #000; box-shadow: 0 0 40px gold; }
+
+        /* الرفع والتحميل */
+        .upload-btn {
+            padding: 12px 30px;
+            border: 1px solid gold;
+            border-radius: 15px;
+            cursor: pointer;
+            color: gold;
+            font-weight: bold;
+        }
+        #file-name { margin-top: 15px; font-size: 13px; color: gold; }
         .loading-container { display: none; color: gold; font-weight: bold; margin-top: 15px; }
         .dots:after { content: '.'; animation: dots 1.5s steps(5, end) infinite; }
         @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60% { content: '...'; } 80%, 100% { content: ''; } }
-        .footer-container { margin-top: 60px; padding: 30px 60px; border-top: 1px solid rgba(255, 215, 0, 0.2); display: flex; justify-content: space-between; align-items: center; }
-        .footer-link { color: #fff; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-        .footer-link:hover { color: gold; }
-        .upload-btn { padding: 12px 25px; border: 1px solid gold; border-radius: 15px; cursor: pointer; color: gold; }
+
+        /* الضمانات */
+        .trust-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+        }
+
+        /* الفوتر الاحترافي */
+        .footer-container {
+            margin-top: 80px;
+            padding: 30px 60px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-link {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .footer-link:hover { color: gold; text-shadow: 0 0 10px gold; }
     </style>
 </head>
 <body>
+
     <div class="header">
-        <div style="width:140px;"></div>
-        <h1 class="logo">HAMOUZI</h1>
-        <a href="/login" class="login-btn">تسجيل الدخول</a>
+        <div style="width: 120px;"></div>
+        <div class="logo-container">
+            <h1 class="logo">HAMOUZI</h1>
+            <div class="logo-line"></div>
+        </div>
+        <a href="/login" class="login-btn">Login</a>
     </div>
 
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="wrapper">
+            <div class="ad-space">ADVERTISING SPACE</div>
+
             <div class="box">
-                <h3 style="color:gold;">Upload</h3>
+                <h3 style="color:gold;">Upload Image</h3>
                 <input type="file" name="file" id="fileInput" hidden required>
-                <label for="fileInput" id="label-text" class="upload-btn">Choose Image</label>
-                <div id="file-name" style="margin-top:10px; font-size:12px; color:gold;">No file chosen</div>
+                <label for="fileInput" id="label-text" class="upload-btn">Choose File</label>
+                <div id="file-name">No file chosen</div>
                 <div class="loading-container" id="loader">جارى المعالجة<span class="dots"></span></div>
             </div>
 
-            <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display: flex; flex-direction: column;">
                 <a href="/crop"><button type="button" class="tool-btn">Crop Image</button></a>
                 <a href="/compress"><button type="button" class="tool-btn">Compress Image</button></a>
                 <a href="/convert"><button type="button" class="tool-btn">Convert Format</button></a>
@@ -52,19 +222,31 @@
 
             <div class="box">
                 {% if result_image %}
-                    <img src="data:image/png;base64,{{ result_image }}" style="max-width:85%; border-radius:15px;">
+                    <img src="data:image/png;base64,{{ result_image }}" style="max-width:85%; border-radius:20px; box-shadow: 0 0 20px gold;">
                 {% else %}
-                    <h3 style="color:gold; opacity:0.5;">Preview</h3>
+                    <h3 style="color:gold; opacity:0.4;">Preview</h3>
+                    <p style="font-size:12px; opacity:0.3;">Result will appear here</p>
                 {% endif %}
             </div>
+
+            <div class="ad-space">ADVERTISING SPACE</div>
         </div>
+
         <button type="submit" class="remove-btn">🪄 Remove Background</button>
+
+        <div class="trust-bar">
+            <div>🛡️ 100% Secure</div>
+            <div style="border-left:1px solid gold; height:15px;"></div>
+            <div>🔒 No data is stored</div>
+            <div style="border-left:1px solid gold; height:15px;"></div>
+            <div>🏅 High Quality</div>
+        </div>
     </form>
 
     <div class="footer-container">
-        <a href="/privacy" class="footer-link">🛡️ Privacy Policy</a>
-        <div style="color:rgba(255,255,255,0.5);">© 2026 HAMOUZI. All rights reserved.</div>
-        <a href="/contact" class="footer-link">📞 Contact Us</a>
+        <a href="/privacy" class="footer-link"><span style="color:gold;">🛡️</span> Privacy Policy</a>
+        <div style="color:rgba(255,255,255,0.4); font-size:14px;">© 2026 HAMOUZI. All rights reserved.</div>
+        <a href="/contact" class="footer-link"><span style="color:gold;">📞</span> Contact Us</a>
     </div>
 
     <script>
@@ -72,10 +254,17 @@
         const fileName = document.getElementById('file-name');
         const form = document.getElementById('uploadForm');
         const loader = document.getElementById('loader');
-        const label = document.getElementById('label-text');
+        const labelText = document.getElementById('label-text');
 
-        fileInput.onchange = () => { if(fileInput.files[0]) fileName.innerText = fileInput.files[0].name; };
-        form.onsubmit = () => { label.style.display='none'; fileName.style.display='none'; loader.style.display='block'; };
+        fileInput.onchange = () => {
+            if(fileInput.files[0]) fileName.innerText = "Selected: " + fileInput.files[0].name;
+        };
+
+        form.onsubmit = () => {
+            labelText.style.display = 'none';
+            fileName.style.display = 'none';
+            loader.style.display = 'block';
+        };
     </script>
 </body>
-</
+</html>
