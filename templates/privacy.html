@@ -1,78 +1,38 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>سياسة الخصوصية - HAMOUZI</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>HAMOUZI - Privacy Policy</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: url("{{ url_for('static', filename='bg.jpg') }}") no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: -1;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 30px;
-            border: 1px solid gold;
-            border-radius: 15px;
-        }
-
-        h1 {
-            color: gold;
-            text-align: center;
-        }
-
-        p {
-            line-height: 1.8;
-        }
-
-        a {
-            color: gold;
-            text-decoration: none;
-        }
-
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-        }
+        body { margin: 0; font-family: sans-serif; background: #000; color: gold; line-height: 1.6; min-height: 100vh; position: relative; }
+        body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 4px solid rgba(255, 215, 0, 0.4); box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.3); pointer-events: none; z-index: 9999; }
+        .container { padding: 60px 10%; text-align: right; direction: rtl; }
+        h1 { font-size: 40px; text-shadow: 0 0 15px gold; text-align: center; }
+        h2 { color: #fff; border-bottom: 1px solid gold; display: inline-block; padding-bottom: 5px; }
+        p { color: #ccc; }
+        .btn-back { display: inline-block; padding: 10px 25px; border: 1px solid gold; color: gold; text-decoration: none; border-radius: 10px; margin-top: 30px; }
+        .btn-back:hover { background: gold; color: #000; }
     </style>
 </head>
-
 <body>
+    <div class="container">
+        <h1>سياسة الخصوصية</h1>
+        
+        <h2>1. جمع المعلومات</h2>
+        <p>نحن لا نقوم بتخزين الصور التي ترفعها على خوادمنا. يتم معالجة الصور فوراً ومسحها بعد انتهاء العملية.</p>
 
-<div class="container">
-    <h1>سياسة الخصوصية</h1>
+        <h2>2. استخدام الـ API</h2>
+        <p>موقعنا يستخدم خدمات خارجية مثل Remove.bg لمعالجة الصور، ويرجى العلم أن تعاملك مع الموقع يخضع لسياسات الخصوصية الخاصة بهذه الخدمات أيضاً.</p>
 
-    <p>
-        نحن في موقع HAMOUZI نحترم خصوصيتك بشكل كامل. لا نقوم بحفظ الصور التي يتم رفعها على الموقع،
-        ويتم استخدامها فقط لمعالجة إزالة الخلفية ثم حذفها تلقائيًا.
-    </p>
+        <h2>3. ملفات تعريف الارتباط</h2>
+        <p>نستخدم ملفات تعريف الارتباط البسيطة لتحسين تجربة المستخدم وضمان عمل الموقع بشكل صحيح.</p>
 
-    <p>
-        لا نقوم بمشاركة بياناتك مع أي طرف ثالث، وجميع العمليات تتم بشكل آمن.
-    </p>
+        <h2>4. أمن البيانات</h2>
+        <p>نحن نطبق معايير أمان عالية لحماية بياناتك أثناء استخدام أدواتنا الذكية.</p>
 
-    <p>
-        باستخدامك للموقع، فإنك توافق على هذه السياسة.
-    </p>
-
-    <a href="/" class="back">العودة إلى الصفحة الرئيسية</a>
-</div>
-
+        <div style="text-align: center;">
+            <a href="/" class="btn-back">← العودة للرئيسية</a>
+        </div>
+    </div>
 </body>
 </html>
