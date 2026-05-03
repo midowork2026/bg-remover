@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>HAMOUZI AI | إزالة خلفية الصور مجاناً - Free Background Remover</title>
-    <meta name="description" content="أفضل أداة مجانية لإزالة خلفية الصور بالذكاء الاصطناعي. Remove image backgrounds instantly with HAMOUZI AI. Fast, free, and high-quality background removal tool.">
-    <meta name="keywords" content="إزالة الخلفية, مسح خلفية الصورة, remove background, bg remover, transparent background, background removal, الذكاء الاصطناعي, AI image editor, HAMOUZI, حذف الخلفية اون لاين, remove.bg alternative">
+    <title>HAMOUZI | Free AI Background Remover Online</title>
+    <meta name="description" content="Remove image backgrounds instantly with HAMOUZI AI. Fast, free, and high-quality background removal tool.">
+    <meta name="keywords" content="remove background, bg remover, AI image editor, transparent background, HAMOUZI">
     <meta name="author" content="HAMOUZI">
-    <link rel="canonical" href="https://ahmedmido2026.pythonanywhere.com/" />
-    <meta name="google-site-verification" content="wwpx0hSTEnsfh1Kd8j3frIS3zxaMysDv6sPtLdnmicc" />
+    <link rel="canonical" href="https://yourdomain.com/" />
 
     <style>
-        /* 1. التعديلات الأساسية والخلفية المتحركة - كما هي تماماً في كودك */
+        /* 1. التعديلات الأساسية والخلفية المتحركة */
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -235,22 +234,11 @@
             gap: 15px; margin-top: 30px; color: rgba(255,255,255,0.7); font-size: 13px;
         }
 
-        /* تنسيق الفوتر المدمج والجديد */
         .footer-container {
             margin-top: 80px; padding: 40px 20px; border-top: 1px solid rgba(255, 215, 0, 0.2);
-            background: rgba(0,0,0,0.6);
+            display: flex; flex-direction: column; gap: 20px; align-items: center;
         }
-        .footer-content {
-            max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; align-items: center;
-        }
-        @media (min-width: 768px) { .footer-content { flex-direction: row; justify-content: space-between; } }
-        
-        .footer-description {
-            max-width: 650px; color: rgba(255,255,255,0.6); font-size: 13px; line-height: 1.6; text-align: center;
-        }
-        @media (min-width: 768px) { .footer-description { text-align: right; } }
-
-        .footer-links { display: flex; gap: 20px; }
+        @media (min-width: 768px) { .footer-container { flex-direction: row; justify-content: space-between; padding: 40px 80px; } }
         .footer-link { color: #fff; text-decoration: none; font-size: 14px; transition: 0.3s; }
         .footer-link:hover { color: gold; text-shadow: 0 0 10px gold; }
     </style>
@@ -279,10 +267,6 @@
             {% endif %}
         </div>
     </div>
-
-    <h1 style="font-size: 1.4rem; color: gold; margin-top: 20px; text-shadow: 0 0 10px rgba(255,215,0,0.3);">
-        إزالة خلفية الصور مجاناً | Free AI Background Remover Online
-    </h1>
 
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="wrapper">
@@ -328,20 +312,9 @@
     </form>
 
     <div class="footer-container">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="/privacy" class="footer-link">Privacy Policy</a>
-                <a href="/contact" class="footer-link">Contact Us</a>
-            </div>
-            
-            <div class="footer-description">
-                <strong>HAMOUZI AI</strong> is a professional tool for <strong>removing backgrounds</strong> and editing images using Artificial Intelligence. 
-                Our platform provides high-quality results for designers and e-commerce owners globally. 
-                | منصة متطورة لمسح خلفية الصور بدقة عالية لخدمة المصممين في جميع أنحاء العالم.
-            </div>
-
-            <div style="color:rgba(255,255,255,0.4); font-size:12px;">© 2026 HAMOUZI - All Rights Reserved</div>
-        </div>
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+        <div style="color:rgba(255,255,255,0.4); font-size:12px;">© 2026 HAMOUZI - All Rights Reserved</div>
+        <a href="/contact" class="footer-link">Contact Us</a>
     </div>
 
     <script>
