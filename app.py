@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, redirect, url_for, session
+from flask import Flask, render_template, request, send_file, redirect, url_for, session, send_from_directory
 import requests
 import base64
 import os
@@ -6,66 +6,63 @@ import io
 from PIL import Image
 
 app = Flask(__name__)
+
 # مفتاح سري لتفعيل خاصية الـ Session (ضروري جداً)
 app.secret_key = 'hamouzi_secret_key_2026'
 
-API_KEY = os.environ.get("API_KEY", "T8PX6VMNgTofTAD72S4AZZPx")
+# إعدادات الـ API Key الخاص بإزالة الخلفية
+# ملحوظة: اتأكد إن الـ API_KEY شغال ومسجل في حسابك
+API_KEY = os.environ.get("API_KEY", "T8PX6VNNgTofTAD72S4AZZPx")
+
+# --- المسارات الأساسية للموقع ---
 
 @app.route('/')
 def index():
-    # بنبعت الإيميل للصفحة عشان لو موجود تظهر الأيقونة
+    # بنجيب الإيميل للخدمة عشان لو موجود تظهر الأيقونة
     user_email = session.get('user_email')
     return render_template('index.html', user_email=user_email)
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        # بنخزن الإيميل في السشن عشان الموقع يعرف إنك سجلت
-        session['user_email'] = email
+# --- المسارات الخاصة بجوجل والأرشفة (إضافة جديدة) ---
+
+@app.route('/robots.txt')
+def robots_txt():
+    # بيسمح لجوجل إنه يشوف ملف التعليمات من فولدر static
+    return send_from_directory(app.static_folder, 'robots.txt')
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    # بيسمح لجوجل إنه يشوف خريطة الموقع من فولدر static
+    return send_from_directory(app.static_folder, 'sitemap.xml')
+
+# --- أضف هنا باقي الـ Routes الخاصة بموقعك (مثل إزالة الخلفية والرفع) ---
+
+# مثال لمسار معالجة الصور (تأكد من وجوده في كودك الأصلي)
+@app.route('/remove-bg', methods=['POST'])
+def remove_background():
+    if 'file' not in request.files:
         return redirect(url_for('index'))
-    return render_template('login.html')
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        # بنخزن الإيميل فوراً بعد التسجيل
-        session['user_email'] = email
+    
+    file = request.files['file']
+    if file.filename == '':
         return redirect(url_for('index'))
-    return render_template('register.html')
 
-@app.route('/logout')
-def logout():
-    # حذف بيانات المستخدم لتسجيل الخروج
-    session.pop('user_email', None)
-    return redirect(url_for('index'))
+    # كود معالجة الصورة باستخدام الـ API
+    response = requests.post(
+        'https://api.remove.bg/v1.0/removebg',
+        files={'image_file': file},
+        data={'size': 'auto'},
+        headers={'X-API-Key': API_KEY},
+    )
+    
+    if response.status_code == requests.codes.ok:
+        return send_file(
+            io.BytesIO(response.content),
+            mimetype='image/png',
+            as_attachment=True,
+            download_name='hamouzi_no_bg.png'
+        )
+    else:
+        return "حدث خطأ في معالجة الصورة، حاول مرة أخرى.", 400
 
-# --- باقي المسارات كما هي بدون أي تغيير ---
-@app.route('/crop')
-def crop_page(): return render_template('crop.html')
-@app.route('/compress')
-def compress_page(): return render_template('compress.html')
-@app.route('/convert')
-def convert_page(): return render_template('convert.html')
-@app.route('/merge')
-def merge_page(): return render_template('merge.html')
-@app.route('/privacy')
-def privacy(): return render_template('privacy.html')
-@app.route('/contact')
-def contact(): return render_template('contact.html')
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    file = request.files.get('file')
-    if not file: return render_template('index.html', error="Please choose an image first", user_email=session.get('user_email'))
-    response = requests.post('https://api.remove.bg/v1.0/removebg', files={'image_file': file}, data={'size': 'auto'}, headers={'X-Api-Key': API_KEY})
-    if response.status_code == 200:
-        img_base64 = base64.b64encode(response.content).decode('utf-8')
-        return render_template('index.html', result_image=img_base64, user_email=session.get('user_email'))
-    return render_template('index.html', error="API Error", user_email=session.get('user_email'))
-
-# تشغيل التطبيق
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)
